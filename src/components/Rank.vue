@@ -1,0 +1,90 @@
+<template>
+    <div class="container page">
+      <div class="add_info">
+        <b></b>
+        <el-row type="flex" class="row-bg">
+          <el-col :span="4"><div class="grid-content bg-purple title">姓名</div></el-col>
+          <el-col :span="7"><div class="grid-content bg-purple-light title">手机号</div></el-col>
+          <el-col :span="8"><div class="grid-content bg-purple title">中奖日期</div></el-col>
+          <el-col :span="5"><div class="grid-content bg-purple-light title">中奖等级</div></el-col>
+        </el-row>
+        <div class='content'>
+          <el-row v-for="(v,i) in rank_data" type="flex" class="row-bg extend" :key="i">
+            <el-col :span="4"><div class="grid-content bg-purple">{{v.name}}</div></el-col>
+            <el-col :span="7"><div class="grid-content bg-purple-light">{{v.phone}}</div></el-col>
+            <el-col :span="8"><div class="grid-content bg-purple">{{v.tTime}}</div></el-col>
+            <el-col :span="5"><div class="grid-content bg-purple-light">{{v.luckLevel}}</div></el-col>
+          </el-row>
+          <p v-if="has_more"><a @click="get_items">点击加载更多</a></p>
+        </div>
+        
+      </div>
+    </div>
+  
+</template>
+<script>
+
+export default {
+    name: 'rank',
+    data(){
+      return {
+        salesmanId:'',
+        rank_data:[],
+        current_page:1,
+        has_more:false
+      }
+    },
+    mounted(){
+      this.salesmanId = this.$route.params.id;
+      // this.salesmanId = rq()?rq().salesmanId:'';
+      this.get_items();
+    },
+    methods:{
+      get_items(){//请求排行榜信息
+        ax('rankingGrade.do',{'salesmanId':this.salesmanId,'type':'time',page:this.current_page,rows:10}).then(response=>{
+          // console.log(response)
+          // if(response.status=='yes'){
+            this.rank_data.push(...response.data);
+            this.has_more = (response.status=='yes');
+          // }
+        });
+        this.current_page+=1;
+      }
+    }
+}
+</script>
+
+<style lang='less' scoped>
+@import url(../assets/css/main.less);
+div.container{
+  background: url(../assets/img/bg3.png) no-repeat center center; background-size: 100%;
+  div.add_info{
+     position: absolute;top:15%;width:90%;left: 5%;padding:3.2em 1em .1em;height: 70%;margin-top: 10%;background: #fff;border-radius: 8px;
+    .content{
+      overflow: scroll;height: 95%;
+     }
+    .row-bg{
+      .grid-content{
+        text-align: center;font-size:1em;color:rgb(82,158,42);
+        &.title{
+          font-size:1.2em;color:rgb(141,209,105);
+        }
+      }
+      &.extend{
+        padding:.8em 0;
+        border-bottom:1px solid #eee;
+      }
+    }
+    p{
+      text-align: center;margin-top: .8em;
+      a{
+        display: inline-block;padding:.5em 1em ;color: #529e2a;border:1px solid #529e2a;border-radius: 5px;
+      }
+    }
+    b{
+      position:absolute;top:-1.5em;left:1em;width:8em;height:4em;background:url(../assets/img/arrow3.png) no-repeat center center;background-size:100%;
+    }
+  }
+}
+
+</style>
