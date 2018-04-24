@@ -8,7 +8,7 @@
         <li><input type="text" v-model="name" placeholder="请输入姓名（必填）"></li>
         <li><input type="number" v-model="phone" placeholder="请输入电话（必填）"></li>
         <li><input type="number" v-model="identifycode" placeholder="请输入验证码（必填）"><span :class="count !== ''? 'nomal': ''" @click="send_code($event)"><b v-html="countHtml"></b></span></li>
-        <li><input type="text" v-model="workcode" placeholder="请输入寿险顾问工号（必填）"></li>
+        <li><input type="text" :disabled="source=='online'" v-model="workcode" placeholder="请输入寿险顾问工号（必填）"></li>
         <li><h3 class="submit_btn" @click="submit"></h3></li>
       </ul>
     </div>
@@ -27,21 +27,15 @@ export default {
         codeId:'',
         count:'',
         loading:false,
-        countHtml: '发送<br/>验证码'
+        countHtml: '发送<br/>验证码',
+        source:''
       }
     },
     mounted(){
-      if (typeof WeixinJSBridge == "undefined"){
-          if( document.addEventListener ){
-              document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-          }else if (document.attachEvent){
-              document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-              document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-          }
-      }else{
-          onBridgeReady();
-      }
+      common.noShare();
       this.codeId = rq()?rq().codeId:'';
+      this.source = rq().sourceFrom?'online':'offline';
+      this.workcode = rq().salesmanId?rq().salesmanId:'';
     },
     computed:{
       nomal(){
@@ -110,7 +104,7 @@ export default {
         if(this.check_empty()){
           if(this.check_format()){
             this.loading = true;
-            ax('submitInfo.do',{'name':this.name,'phone':this.phone,'code':this.identifycode,'salesmanId':this.workcode,'codeId':this.codeId}).then(response=>{
+            ax('submitInfo.do',{'name':this.name,'phone':this.phone,'code':this.identifycode,'salesmanId':this.workcode,'codeId':this.codeId,'source':this.source}).then(response=>{
               // console.log(response);
               this.loading = false;
               if(response.result=='succ'){

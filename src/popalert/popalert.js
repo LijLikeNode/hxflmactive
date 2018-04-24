@@ -30,7 +30,7 @@ pops.waitend=()=>{
 	},350);
 };
 //确定提示
-pops.confirm=(txt='出错啦')=> {
+pops.confirm=(txt='出错啦',href)=> {
 	let el=document.getElementById('masks');
 	if(!!el){
 		data.innerHTML = txt;
@@ -97,6 +97,30 @@ pops.fade=(txt='出错啦')=> {
 	setTimeout(()=>{
 		el.className='popalert';
 	},2350);
+};
+pops.fade2=(txt='出错啦')=> {
+	let el=document.getElementById('popalert');
+	if(!!el){
+		el.innerHTML=txt;
+		el.className='popalert show';
+	}
+	else{
+		el=document.createElement('div');
+		el.id='popalert';
+		el.className='popalert show';
+		el.innerHTML=txt;
+		// el.appendTo(document.body);
+		document.body.appendChild(el);
+	}
+	// setTimeout(()=>{
+	// 	el.className='popalert show fadein';
+	// },50);
+	// setTimeout(()=>{
+	// 	el.className='popalert show';
+	// },2000);
+	// setTimeout(()=>{
+	// 	el.className='popalert';
+	// },2350);
 };
 pops.fadeStart=(txt='出错啦')=> {
 	let el=document.getElementById('popalert');

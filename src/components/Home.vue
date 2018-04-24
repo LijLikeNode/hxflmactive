@@ -15,7 +15,7 @@ export default {
       }
     },
     mounted(){
-      
+      common.noShare();
     },
     methods:{
       evn(x){//点击跳转

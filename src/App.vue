@@ -1,12 +1,24 @@
 <template>
   <div id="app">
-    <router-view/>
+  	<transition :name="enterType">
+	    <router-view/>
+	</transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'app',
+  props: ['forward'],
+  components: {},
+  computed: {
+  	enterType(){
+  	  return this.forward ? 'slide-left' : 'slide-right';
+  	}
+  },
+  mounted(){
+  	
+  }
 }
 </script>
 

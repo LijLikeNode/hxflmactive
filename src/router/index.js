@@ -5,6 +5,7 @@ import Present from '@/components/Present'
 import Rank from '@/components/Rank'
 import Home from '@/components/Home'
 import Intro from '@/components/Intro'
+import Question from '@/components/Question'
 
 Vue.use(Router)
 
@@ -27,6 +28,12 @@ Vue.use(Router)
       name: 'intro',
       component: Intro,
       meta:{txt:'产品介绍'}
+    },
+    {
+      path: '/question/:id',
+      name: 'question',
+      component: Question,
+      meta:{txt:'少儿成长调查问卷'}
     },
     {
       path: '/present/:id',

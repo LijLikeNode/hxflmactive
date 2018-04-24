@@ -1,32 +1,36 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-Vue.use(Vuex);
-
-
+Vue.use(Vuex)
 
 const state = {
-	count:1
+	count : 4,
+	num : 0
 }
-
 const mutations = {
-	add(state,n){
-		state.count += n
+	add(state,n={a:1}){
+		state.count += n.a;
 	},
-	reduce(state){
-		state.count--
+	struc(state){
+		state.count--;
 	}
 }
-
 const getters = {
-	count:function(state){
-		return state.count += 100//每次count发生变化的时候都会执行此操作
+	//在getter里面不要使用箭头函数
+	num : function(state){
+		return state.num += 10;
 	}
 }
-
-
+const actions = {
+	addPlus(context){//context代表了整个store
+		setTimeout(() => {
+			context.commit('add',{a:2})
+		}, 3000)
+	}
+}
 export default new Vuex.Store({
-    state,
-    mutations,
-    getters
+	state,
+	mutations,
+	getters,
+	actions
 })
