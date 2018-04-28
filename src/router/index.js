@@ -51,8 +51,12 @@ Vue.use(Router)
 });
 router.beforeEach((to, from, next) => {
   if (to.meta.txt) {
-    document.title = to.meta.txt
+    document.title = to.meta.txt;
+    // if(from.meta.txt&&from.meta.txt!='产品介绍'&&to.meta.txt=='产品介绍'){
+    //   window.location.reload();
+    // }
   }
   next();
 });
+// listener.back(router);
 export default router;

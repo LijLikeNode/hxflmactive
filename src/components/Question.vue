@@ -1,6 +1,6 @@
 <template>
     <div class="container page">
-      <img src="../assets/img/bg_ask.png">
+      <!-- <img src="../assets/img/bg_ask.png"> -->
       <div class="add_info">
         <ul>
           <li>
@@ -14,8 +14,8 @@
           <li>
             <h1>您孩子的性别</h1>
             <div class="hxradio">
-               <label><input type="radio" v-model="answer.gender" value="M"><em></em>男</label>
-               <label><input type="radio" v-model="answer.gender" value="F"><em></em>女</label>
+               <label><input type="radio" v-model="answer.gender" value="M"><em></em>小王子</label>
+               <label><input type="radio" v-model="answer.gender" value="F"><em></em>小公主</label>
             </div>  
           </li>
           <li>
@@ -39,10 +39,10 @@
             <h1>3.您更看重教育金储蓄的哪些特征？（多选）</h1>
             <div class="hxradio">
               <label><input type="checkbox" v-model="answer.characteristic[0]"><em></em>安全性</label>
-              <label><input type="checkbox" v-model="answer.characteristic[1]"><em></em>专款专用万</label>
+              <label><input type="checkbox" v-model="answer.characteristic[1]"><em></em>专款专用</label>
               <label><input type="checkbox" v-model="answer.characteristic[2]"><em></em>锁定利率</label>
               <label><input type="checkbox" v-model="answer.characteristic[3]"><em></em>复利增值</label>
-              <label @click="choose_all"><input type="checkbox" v-model="answer.characteristic[4]"><em></em>以上全部</label>
+              <label @touchstart="choose_all()"><input type="checkbox" v-model="answer.characteristic[4]"><em></em>以上全部</label>
              </div>  
           </li>
           <li>
@@ -128,7 +128,8 @@ export default {
             phone3:''
           }
         },
-        mask:false
+        mask:false,
+        canSubmit:true
       }
     },
     watch:{
@@ -137,8 +138,10 @@ export default {
         this.answer.characteristic[4]=items.includes(false)?false:true;
       }
     },
-    mounted(){
+    created(){
       common.noShare();
+    },
+    mounted(){
       this.answer.salesmanId = this.$route.params.id;
       rq()&&rq().luckCode?this.review_ask():'';
     },
@@ -152,23 +155,31 @@ export default {
           if(res.result=='succ'){
             let data = res.data;
             data.characteristic = data.characteristic.split(',');
+            data.characteristic.map((v,i)=>{
+              v==="false"?data.characteristic[i]=false:v==="true"?data.characteristic[i]=true:'';
+            });
             data.friend = JSON.parse(data.friend);
             this.answer = data;
           }
         })
       },
       evn(x){//点击跳转
-        if(!this.check_empty()){
-          popalert.fade('您的问卷有未选择项');
-          return;
+        if(this.canSubmit){
+          this.canSubmit=false;
+          if(!this.check_empty()){
+            popalert.fade('您的问卷有未选择项');
+            this.canSubmit=true;
+            return;
+          }
+          if(!this.check_connect_format()){
+            this.canSubmit=true;
+            return;
+          }
+          this.submit_data();
         }
-        if(!this.check_connect_format()){
-          return;
-        }
-        this.submit_data();
       },
       choose_all(){
-        this.answer.characteristic[4]?this.answer.characteristic.fill(false,0,4):this.answer.characteristic.fill(true,0,4);
+        this.answer.characteristic[4]==true?this.answer.characteristic.fill(false,0,4):this.answer.characteristic.fill(true,0,4);
       },
       check_empty(){
         let data = this.answer;
@@ -190,7 +201,7 @@ export default {
       },
       check_connect_format(){
         //检查电话号码
-        let pass;
+        let pass=true;
         if(this.answer.friend.name1||this.answer.friend.phone1){
           pass = this.answer.friend.name1&&this.answer.friend.phone1?this.check_format(this.answer.friend.name1,this.answer.friend.phone1):popalert.fade('请将联系人姓名与电话补全');
         }
@@ -222,6 +233,8 @@ export default {
         data.friend = JSON.stringify(this.answer.friend);
         ax('submitQuestion.do',data).then((res)=>{
           res.result=='succ'?this.submit_success(res.codeId):this.error_tip(res.msg);
+        }).catch((err)=>{
+          this.canSubmit=true;
         })
       },
       submit_success(x){
@@ -229,6 +242,7 @@ export default {
         setTimeout(()=>{this.$router.push(`/?codeId=${x}&sourceFrom=online&salesmanId=${this.answer.salesmanId}`);},2500);
       },
       error_tip(x){
+        this.canSubmit=true;
         popalert.fade(x);
       }
     }
@@ -238,18 +252,21 @@ export default {
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
 div.container{
-  background: url(../assets/img/bg4.png) no-repeat center center; background-size: cover;position: relative;
+  background: url('../assets/img/bg_ask.png') no-repeat center center; background-size: cover;position: relative;padding-top: 2em;padding-bottom: 2em;
   div.mask{position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 999;}
   img{width: 100%;}
   a{
     &.btn{
-      position: absolute;bottom: .5em;margin:0 5%;width: 90%;background: url('../assets/img/btn_bg.png') no-repeat center center; background-size: 100%;height: 5em;line-height: 4.8em;text-align:center;font-size: 1.2em;color: #fff;
+      display: block;margin:0 5%;width: 90%;background: url('../assets/img/btn_bg.png') no-repeat center center; background-size: 100%;height: 5em;line-height: 4.8em;text-align:center;font-size: 1.2em;color: #fff;
     }
   }
   div.add_info{
-    position: absolute;top: 2em;width:90%;left: 5%;background: #fff;box-shadow: 0px 0px 8px 0px rgba(69,142,204,0.5);padding:0 1em;border-radius:10px;
+    // position: absolute;top: 2em;left: 5%;
+    width:90%;background: #fff;box-shadow: 0px 0px 8px 0px rgba(69,142,204,0.5);padding:.1em 1em 0;border-radius:10px;position: relative;margin-left: 5%;margin-bottom: 12%;
     &.next{
-      top: 51em;padding-top: 2.5em;
+      // top: 51em;
+      padding-top: 2.5em;
+      margin-bottom: 5%;
     }
     h2{
       font-size: 1em;color: @mainGreen;line-height: 2em;

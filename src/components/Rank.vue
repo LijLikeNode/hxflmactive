@@ -10,12 +10,12 @@
         </el-row>
         <div class='content'>
           <el-row v-for="(v,i) in rank_data" type="flex" class="row-bg extend" :key="i">
-            <el-col :span="5"><div class="grid-content bg-purple name"  @click="review_ask(v.source,v.luck_code,v.salesmanCode)"><a class="icon" v-if="v.source=='online'"></a>{{v.name}}</div></el-col>
+            <el-col :span="5" class="name"><div class="grid-content bg-purple name"  @click="review_ask(v.source,v.luck_code,v.salesmanCode)"><a :class="[{'icon':v.source=='online'}]"></a>{{v.name}}</div></el-col>
             <el-col :span="7"><div class="grid-content bg-purple-light">{{v.phone}}</div></el-col>
             <el-col :span="7"><div class="grid-content bg-purple">{{v.tTime}}</div></el-col>
             <el-col :span="5"><div class="grid-content bg-purple-light">{{v.luckLevel}}</div></el-col>
           </el-row>
-          <p v-if="has_more"><a @click="get_items">点击加载更多</a></p>
+          <p v-if="has_more"><i @click="get_items">点击加载更多</i></p>
         </div>
         
       </div>
@@ -65,8 +65,11 @@ div.container{
      position: absolute;top:15%;width:90%;left: 5%;padding:3.2em 1em .1em;height: 70%;margin-top: 10%;background: #fff;border-radius: 8px;
     .content{
       overflow: scroll;height: 95%;position: relative;
-      a.icon{
-        width: 1.2em;height: 1em; background:url('../assets/img/online.png') no-repeat top center;background-size: 100%;display: inline-block;vertical-align: middle;
+      a{
+        width: 1.2em;height: 1em; display: inline-block;vertical-align: middle;
+        &.icon{
+          background:url('../assets/img/online.png') no-repeat top center;background-size: 100%;
+        }
       }
      }
     .row-bg{
@@ -83,15 +86,15 @@ div.container{
     }
     p{
       text-align: center;margin-top: .8em;
-      a{
-        display: inline-block;padding:.5em 1em ;color: #529e2a;border:1px solid #529e2a;border-radius: 5px;
+      i{
+        display: inline-block;padding:.5em 1em ;color: #529e2a;text-decoration: underline;
       }
     }
     b{
       position:absolute;top:-1.5em;left:1em;width:8em;height:4em;background:url(../assets/img/arrow3.png) no-repeat center center;background-size:100%;
     }
   }
-  div.name{text-align: left;}
+  div.name{text-align: left !important;}
 }
 
 </style>

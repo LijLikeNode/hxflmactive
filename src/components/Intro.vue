@@ -25,8 +25,9 @@ export default {
       }
     },
     mounted(){
-      // doShare("","填问卷 抽大奖","新福临门上市有奖评鉴  春暖花开华夏好礼相赠","http://zmt.ihxlife.com/tenyears1/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/zhjhs/image/pic.png');
-      doShare("","填问卷 抽大奖","新福临门上市有奖评鉴  春暖花开华夏好礼相赠","http://test.hxlife.com/csf/tenyears/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
+      // console.log(this.$route.name)
+      doShare("","填问卷 抽大奖","新福临门上市有奖评鉴  春暖花开华夏好礼相赠","http://zmt.ihxlife.com/tenyears/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
+      // doShare("","填问卷 抽大奖","新福临门上市有奖评鉴  春暖花开华夏好礼相赠","http://test.hxlife.com/csf/tenyears/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
     },
     methods:{
       evn(){//判断来源 业务员OR客户

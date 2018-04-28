@@ -8,6 +8,7 @@ import $ from 'jquery';
 import common from './ajaxrequest/common'
 import ax from './ajaxrequest/ajaxPromise';
 import rq from './ajaxrequest/requesthash';
+import listener from './listener/listion';
 import rt from './rotate/rotate';
 import pop from './popalert/popalert';
 import {Row,Col,Loading} from 'element-ui';
@@ -28,10 +29,10 @@ window.rq = rq;
 window.common = common;
 window.rotate = rt;
 window.popalert = pop;
+window.listener = listener;
 /* eslint-disable no-new */
 
-
-
+listener.back();
 const historyStack = {
     data: {
         history: [],
@@ -50,6 +51,8 @@ const historyStack = {
         }
     }
 };
+
+
 new Vue({
   el: '#app',
   router,

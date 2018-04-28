@@ -8,7 +8,7 @@
         <li><input type="text" v-model="name" placeholder="请输入姓名（必填）"></li>
         <li><input type="number" v-model="phone" placeholder="请输入电话（必填）"></li>
         <li><input type="number" v-model="identifycode" placeholder="请输入验证码（必填）"><span :class="count !== ''? 'nomal': ''" @click="send_code($event)"><b v-html="countHtml"></b></span></li>
-        <li><input type="text" :disabled="source=='online'" v-model="workcode" placeholder="请输入寿险顾问工号（必填）"></li>
+        <li><input type="text" v-model="workcode" :readonly="source=='online'" placeholder="请输入寿险顾问工号（必填）"></li>
         <li><h3 class="submit_btn" @click="submit"></h3></li>
       </ul>
     </div>
@@ -31,11 +31,13 @@ export default {
         source:''
       }
     },
+    created(){
+      this.codeId = rq()&&rq().codeId?rq().codeId:'';
+      this.source = rq()&&rq().sourceFrom?'online':'offline';
+      this.workcode = rq()&&rq().salesmanId?rq().salesmanId:'';
+    },
     mounted(){
       common.noShare();
-      this.codeId = rq()?rq().codeId:'';
-      this.source = rq().sourceFrom?'online':'offline';
-      this.workcode = rq().salesmanId?rq().salesmanId:'';
     },
     computed:{
       nomal(){
@@ -138,7 +140,7 @@ export default {
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
 div.container{
-  background: url(../assets/img/bg.png) no-repeat center center; background-size:100%;
+  background: url(../assets/img/bg.png) no-repeat center center; background-size:cover;
   div.add_info{
      position: absolute;bottom: 3em;width:90%;left: 5%;background: #fff;box-shadow: 0px 0px 20px 0px rgba(175,250,108,0.5);padding:3.5em 2em 1.5em;border-radius:10px;
     ul{

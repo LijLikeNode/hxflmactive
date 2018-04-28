@@ -15,7 +15,8 @@ export default {
       }
     },
     mounted(){
-      common.noShare();
+      // common.noShare();
+      doShare("","填问卷 抽大奖","新福临门上市有奖评鉴  春暖花开华夏好礼相赠","http://zmt.ihxlife.com/tenyears/#/intro/"+rq().salesmanId+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
     },
     methods:{
       evn(x){//点击跳转
@@ -36,7 +37,7 @@ export default {
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
 div.container{
-  background: url(../assets/img/bg4.png) no-repeat center center; background-size: cover;position: relative;
+  background: url('../assets/img/bg4.png') no-repeat center center; background-size: 100% 100%;position: relative;
   a{
     position: absolute;
     &.home_entrance{

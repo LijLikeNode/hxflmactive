@@ -26,8 +26,8 @@ window.doShare=function(ctx, title, desc, link, imgUrl,prosCode, userid, sysSour
 	}
 	$.ajax({
 	    type: "POST",
-	   url: 'http://test.hxlife.com/ssj/wxshare/wxShare.do',
-	    // url: 'http://zmt.ihxlife.com/zmt/wx/wxShare.do',
+	   // url: 'http://test.hxlife.com/ssj/wxshare/wxShare.do',
+	    url: 'http://zmt.ihxlife.com/zmt/wx/wxShare.do',
 	    data: {appurl:location.href.split('#')[0]},
 	    dataType: "json",
 	    success: function(data){
