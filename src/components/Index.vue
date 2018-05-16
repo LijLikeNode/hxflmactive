@@ -7,7 +7,7 @@
       <ul>
         <li><input type="text" v-model="name" placeholder="请输入姓名（必填）"></li>
         <li><input type="number" v-model="phone" placeholder="请输入电话（必填）"></li>
-        <li><input type="number" v-model="identifycode" placeholder="请输入验证码（必填）"><span :class="count !== ''? 'nomal': ''" @click="send_code($event)"><b v-html="countHtml"></b></span></li>
+        <li><input type="number" v-model="identifycode" placeholder="请输入验证码（必填）"><span :class="count !== ''? 'nomal': ''" @touchstart="send_code($event)"><b v-html="countHtml"></b></span></li>
         <li><input type="text" v-model="workcode" :readonly="source=='online'" placeholder="请输入寿险顾问工号（必填）"></li>
         <li><h3 class="submit_btn" @click="submit"></h3></li>
       </ul>
@@ -196,7 +196,7 @@ div.container{
             line-height: 3;
           }
           b{
-            width: auto;
+            width:100%;
             position: absolute;
             font-weight: normal;
             background: transparent;

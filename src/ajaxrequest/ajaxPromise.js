@@ -58,24 +58,21 @@ const ax =async (url,para,mask) => {
         url:url,
         data:para.axType!=='get' ? param : null,
         params:para.axType==='get' ? param : null,
-        // responseType:'json',
-        // timeout: 1000,
-        // withCredentials: true,  // 带cookie
     })
     .then(function (response) {
         // console.log(response.data);
         // if(!!callback) callback(response.data);
-        // if(mask) window.popalert.waitend();
+        if(mask) window.popalert.waitend();
         return response.data;
     })
     .catch(function (error) {
         // console.log(error);
-        // if(mask){
-        //     window.popalert.waitend();
-        //     setTimeout(()=>{
-        //         // window.popalert.fade('网络错误，请稍后重试');
-        //     },500);
-        // }
+        if(mask){
+            window.popalert.waitend();
+            setTimeout(()=>{
+                window.popalert.fade('网络错误，请稍后重试');
+            },500);
+        }
         // else window.popalert.fade('网络错误，请稍后重试');
     });
 };

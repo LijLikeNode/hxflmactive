@@ -42,7 +42,7 @@ export default {
     },
     methods:{
       get_items(){//请求排行榜信息
-        ax('rankingGrade.do',{'salesmanId':this.salesmanId,'type':'time',page:this.current_page,rows:10}).then(response=>{
+        ax('rankingGrade.do',{'salesmanId':this.salesmanId,'type':'time',page:this.current_page,rows:10},true).then(response=>{
             this.rank_data.push(...response.data);
             this.has_more = (response.status=='yes');
         });
