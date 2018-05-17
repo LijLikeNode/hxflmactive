@@ -151,7 +151,7 @@ export default {
         this.request_answer();
       },
       request_answer(){
-        ax('findQuestion.do',{'salesmanCode':this.$route.params.id,'luck_code':rq().luckCode}).then(res=>{
+        ax('findQuestion.do',{'salesmanCode':this.$route.params.id,'luck_code':rq().luckCode},true).then(res=>{
           if(res.result=='succ'){
             let data = res.data;
             data.characteristic = data.characteristic.split(',');
@@ -231,7 +231,7 @@ export default {
       submit_data(){
         let data = {...this.answer};
         data.friend = JSON.stringify(this.answer.friend);
-        ax('submitQuestion.do',data).then((res)=>{
+        ax('submitQuestion.do',data,true).then((res)=>{
           res.result=='succ'?this.submit_success(res.codeId):this.error_tip(res.msg);
         }).catch((err)=>{
           this.canSubmit=true;
