@@ -46,6 +46,9 @@ export default {
             this.rank_data.push(...response.data);
             this.has_more = (response.status=='yes');
         });
+        // jqax('rankingGrade.do',{'salesmanId':this.salesmanId,'type':'time',page:this.current_page,rows:10},data=>{
+        //     alert(data)
+        // });
         this.current_page+=1;
       },
       review_ask(source,luckCode,salesmanId){

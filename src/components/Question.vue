@@ -155,9 +155,11 @@ export default {
           if(res.result=='succ'){
             let data = res.data;
             data.characteristic = data.characteristic.split(',');
+            // console.log(data.characteristic)
             data.characteristic.map((v,i)=>{
-              v==="false"?data.characteristic[i]=false:v==="true"?data.characteristic[i]=true:'';
+              v.indexOf("false")!==-1?data.characteristic[i]=false:v.indexOf("true")!==-1?data.characteristic[i]=true:'';
             });
+            // console.log(data.characteristic)
             data.friend = JSON.parse(data.friend);
             this.answer = data;
           }
@@ -231,6 +233,7 @@ export default {
       submit_data(){
         let data = {...this.answer};
         data.friend = JSON.stringify(this.answer.friend);
+        data.characteristic = JSON.stringify(this.answer.characteristic);
         ax('submitQuestion.do',data,true).then((res)=>{
           res.result=='succ'?this.submit_success(res.codeId):this.error_tip(res.msg);
         }).catch((err)=>{

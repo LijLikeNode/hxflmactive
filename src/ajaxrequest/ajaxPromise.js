@@ -36,9 +36,8 @@
 // export default ax;
 
 import axios from 'axios';
+import Qs from 'qs';
 // 参数为地址，参数，回调，遮罩，消息，同步 ----- 其中回调为数组时，第一个为成功，第二个为完成，错误采用统一方法
-
-// const baseURL = 'http://test.hxlife.com/csf/feedback/dial/'
 const baseURL = 'http://zmt.ihxlife.com/fb/dial/'
 // const baseURL = 'http://zmt.ihxlife.com/fb1/dial/'
 
@@ -48,20 +47,21 @@ const ax =async (url,para,mask) => {
     // let baseURL='/star/'+'feedback/dial/';
     // let baseURL='/star/';
 
-    let param = new URLSearchParams();
-    for(let i in para){
-        param.append(i,para[i]);
-    }
+    // let param = new URLSearchParams();
+    // for(let i in para){
+    //     param.append(i,para[i]);
+    // }
+
+    let param = Qs.stringify(para);
+
     return axios({
         baseURL:baseURL,
         method:para.axType || 'post',
         url:url,
-        data:para.axType!=='get' ? param : null,
-        params:para.axType==='get' ? param : null,
+        data:para.axType!=='get' ? param : null
     })
     .then(function (response) {
         // console.log(response.data);
-        // if(!!callback) callback(response.data);
         if(mask) window.popalert.waitend();
         return response.data;
     })
