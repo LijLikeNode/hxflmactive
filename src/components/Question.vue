@@ -242,7 +242,7 @@ export default {
       },
       submit_success(x){
         popalert.fade('问卷提交成功，即将跳转至信息回执页面');
-        setTimeout(()=>{this.$router.push(`/?codeId=${x}&sourceFrom=online&salesmanId=${this.answer.salesmanId}`);},2500);
+        setTimeout(()=>{this.$router.push(`/?codeId=${x}&sourceFrom=online&salesmanId=${this.answer.salesmanId}&product_type=flm`)},2500);
       },
       error_tip(x){
         this.canSubmit=true;

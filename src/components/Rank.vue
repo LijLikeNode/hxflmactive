@@ -9,8 +9,8 @@
           <el-col :span="5"><div class="grid-content bg-purple-light title">中奖等级</div></el-col>
         </el-row>
         <div class='content'>
-          <el-row v-for="(v,i) in rank_data" type="flex" class="row-bg extend" :key="i">
-            <el-col :span="5" class="name"><div class="grid-content bg-purple name"  @click="review_ask(v.source,v.luck_code,v.salesmanCode)"><a :class="[{'icon':v.source=='online'}]"></a>{{v.name}}</div></el-col>
+          <el-row v-for="(v,i) in rank_data" type="flex" :class="['row-bg','extend',{'ybt':v.product_type=='ybt'}]" :key="i">
+            <el-col :span="5" class="name"><div class="grid-content bg-purple name"  @click="review_ask(v.source,v.luck_code,v.salesmanCode,v.product_type)"><a :class="[{'icon':v.source=='online'}]"></a>{{v.name}}</div></el-col>
             <el-col :span="7"><div class="grid-content bg-purple-light">{{v.phone}}</div></el-col>
             <el-col :span="7"><div class="grid-content bg-purple">{{v.tTime}}</div></el-col>
             <el-col :span="5"><div class="grid-content bg-purple-light">{{v.luckLevel}}</div></el-col>
@@ -51,9 +51,9 @@ export default {
         // });
         this.current_page+=1;
       },
-      review_ask(source,luckCode,salesmanId){
+      review_ask(source,luckCode,salesmanId,productType){
         if(source=='online'){
-          this.$router.push(`/question/${salesmanId}?luckCode=${luckCode}`);
+          productType=='flm'?this.$router.push(`/question/${salesmanId}?luckCode=${luckCode}`):this.$router.push(`/ybtquestion/${salesmanId}?luckCode=${luckCode}`);
         }
       }
     }
@@ -77,14 +77,21 @@ div.container{
      }
     .row-bg{
       .grid-content{
-        text-align: center;font-size:1em;color:rgb(82,158,42);
+        text-align: center;font-size:1em;
+        // color:rgb(82,158,42);
         &.title{
           font-size:1.2em;color:rgb(141,209,105);
         }
+        &.ybt{
+          color:@deepRed;
+        }
       }
       &.extend{
-        padding:.8em 0;
+        padding:.8em 0;color:rgb(82,158,42);
         border-bottom:1px solid #eee;
+        &.ybt{
+          color:#3333bc;
+        }
       }
     }
     p{
@@ -94,7 +101,7 @@ div.container{
       }
     }
     b{
-      position:absolute;top:-1.5em;left:1em;width:8em;height:4em;background:url(../assets/img/arrow3.png) no-repeat center center;background-size:100%;
+      position:absolute;top:-1.5em;left:1em;width:8em;height:4em;background:url('../assets/img/arrow3.png') no-repeat center center;background-size:100%;
     }
   }
   div.name{text-align: left !important;}

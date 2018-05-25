@@ -9,10 +9,10 @@ import router from './router';
 import $ from 'jquery';
 import common from './ajaxrequest/common'
 import ax from './ajaxrequest/ajaxPromise';
-import {hxajax} from './ajaxrequest/jqueryAjax';
+// import {hxajax} from './ajaxrequest/jqueryAjax';
 import rq from './ajaxrequest/requesthash';
-import listener from './listener/listion';
-import rt from './rotate/rotate';
+// import listener from './listener/listion';
+// import rt from './rotate/rotate';
 import pop from './popalert/popalert';
 import {Row,Col,Loading} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -29,15 +29,15 @@ Vue.config.productionTip = false;
 // console.log(vConsole)
 window.$ = $;
 window.ax = ax;
-window.jqax = hxajax;
+// window.jqax = hxajax;
 window.rq = rq;
 window.common = common;
-window.rotate = rt;
+// window.rotate = rt;
 window.popalert = pop;
-window.listener = listener;
+// window.listener = listener;
 /* eslint-disable no-new */
 
-listener.back();
+// listener.back();
 const historyStack = {
     data: {
         history: [],

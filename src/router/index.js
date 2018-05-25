@@ -5,7 +5,9 @@ import Present from '@/components/Present'
 import Rank from '@/components/Rank'
 import Home from '@/components/Home'
 import Intro from '@/components/Intro'
+import YbtIntro from '@/components/YbtIntro'
 import Question from '@/components/Question'
+import YbtQuestion from '@/components/YbtQuestion'
 
 Vue.use(Router)
 
@@ -30,9 +32,21 @@ Vue.use(Router)
       meta:{txt:'产品介绍'}
     },
     {
+      path: '/ybtintro/:id',
+      name: 'ybtintro',
+      component: YbtIntro,
+      meta:{txt:'产品介绍'}
+    },
+    {
       path: '/question/:id',
       name: 'question',
       component: Question,
+      meta:{txt:'少儿成长调查问卷'}
+    },
+    {
+      path: '/ybtquestion/:id',
+      name: 'ybtquestion',
+      component: YbtQuestion,
       meta:{txt:'少儿成长调查问卷'}
     },
     {

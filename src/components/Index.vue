@@ -28,13 +28,15 @@ export default {
         count:'',
         loading:false,
         countHtml: '发送<br/>验证码',
-        source:''
+        source:'',
+        product_type:'flm'
       }
     },
     created(){
       this.codeId = rq()&&rq().codeId?rq().codeId:'';
       this.source = rq()&&rq().sourceFrom?'online':'offline';
       this.workcode = rq()&&rq().salesmanId?rq().salesmanId:'';
+      this.product_type = rq()&&rq().product_type?rq().product_type:'flm';
     },
     mounted(){
       common.noShare();
@@ -106,7 +108,16 @@ export default {
         if(this.check_empty()){
           if(this.check_format()){
             this.loading = true;
-            ax('submitInfo.do',{'name':this.name,'phone':this.phone,'code':this.identifycode,'salesmanId':this.workcode,'codeId':this.codeId,'source':this.source}).then(response=>{
+            let param = {
+              'name':this.name,
+              'phone':this.phone,
+              'code':this.identifycode,
+              'salesmanId':this.workcode,
+              'codeId':this.codeId,
+              'source':this.source,
+              'product_type':this.product_type
+            }
+            ax('submitInfo.do',param).then(response=>{
               // console.log(response);
               this.loading = false;
               if(response.result=='succ'){
