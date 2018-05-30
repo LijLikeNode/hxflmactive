@@ -7,7 +7,7 @@
       <ul>
         <li><input type="text" v-model="name" placeholder="请输入姓名（必填）"></li>
         <li><input type="number" v-model="phone" placeholder="请输入电话（必填）"></li>
-        <li><input type="number" v-model="identifycode" placeholder="请输入验证码（必填）"><span :class="count !== ''? 'nomal': ''" @touchstart="send_code($event)"><b v-html="countHtml"></b></span></li>
+        <li><input type="number" v-model="identifycode" placeholder="请输入验证码（必填）"><span :class="count !== '发送<br/>验证码'? 'nomal': ''" @touchstart="send_code($event)"><b v-html="count"></b></span></li>
         <li><input type="text" v-model="workcode" :readonly="source=='online'" placeholder="请输入寿险顾问工号（必填）"></li>
         <li><h3 class="submit_btn" @click="submit"></h3></li>
       </ul>
@@ -25,7 +25,7 @@ export default {
         identifycode:'',
         workcode:'',
         codeId:'',
-        count:'',
+        count:'发送<br/>验证码',
         loading:false,
         countHtml: '发送<br/>验证码',
         source:'',
@@ -48,7 +48,7 @@ export default {
     },
     methods:{
       send_code(){//发送短信验证码
-        if(this.count==''){
+        if(this.count=='发送<br/>验证码'){
           if(this.check_phone_format()){
             ax('sendVercode.do',{'phone':this.phone}).then((response)=>{
               if(response.result && response.result == 'succ'){
@@ -61,15 +61,14 @@ export default {
       },
       count_down(e){//倒计时
         this.count = 60;
-        this.countHtml = `60`
+        // this.countHtml = `60`
         let timer = setInterval(()=>{
           if(this.count!=1) {
             this.count--;
-            this.countHtml = `${this.count}`
+            // this.countHtml = `${this.count}`
           }else{
             clearInterval(timer);
-            this.count = '';
-            this.countHtml = '发送<br/>验证码'
+            this.count = '发送<br/>验证码';
           } 
         },1000);
       },

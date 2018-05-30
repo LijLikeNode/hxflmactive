@@ -1,19 +1,21 @@
 <template>
     <div class="container page">
-      <div class="banner"></div>
+      <!-- <div class="banner"></div> -->
 
       <div class="add_info" v-for="(item,index) in question" :key="index">
-        <h2><span :class="'num'+index"></span>{{item.topic}}<b v-if="item.choiceType=='checkbox'" style="color:#F85F00;font-weight:normal;margin-right:.2em;">[选择三个]</b></h2>
+        <h2><span>{{index+1}}</span>{{item.topic}}</h2>
         <div class="hxradio">
           <!-- 单选框 -->
           <label v-if="item.choiceType=='radio'" v-for="(val,i) in item.options">
-            <input :type="item.choiceType" v-model="item.answer" :value="item.choiceType=='radio'?i+1:false" >
+            <input :type="item.choiceType" v-model="item.answer.value" :value="item.choiceType=='radio'?i+1:false"  @click.stop="jud_otheradvise(index,i)">
             <em></em>{{val}}
+            <input class="advise" v-if="i==item.options.length-1" placeholder="请输入您的意见" v-model="item.answer.otherAdvise" disabled type="text" >
           </label>
           <!-- 复选框 -->
           <label v-if="item.choiceType=='checkbox'" v-for="(val,i) in item.options">
-            <input :type="item.choiceType" v-model="item.answer[i]" >
+            <input :type="item.choiceType" v-model="item.answer.value[i]" @click.stop="jud_otheradvise(index,i,true)">
             <em></em>{{val}}
+            <input class="advise" v-if="i==item.options.length-1" disabled v-model="item.answer.otherAdvise" placeholder="请输入您的意见" type="text">
           </label>
         </div>
         <p v-if="item.note!=''">{{item.note}}</p>
@@ -32,36 +34,58 @@ export default {
       return {
         answer:{
           salesmanId:"",
-          ybt_problem1:1,
-          ybt_problem2:2,
-          ybt_problem3:[false,false,false,false,false,false,false,false]
+          ybt_problem1:{
+            value:1,
+            otherAdvise:''
+          },
+          ybt_problem2:{
+            value:2,
+            otherAdvise:''
+          },
+          ybt_problem3:{
+            value:[false,false,false,false,false,false,false,false],
+            otherAdvise:''
+          },
+          ybt_problem4:{
+            value:1,
+            otherAdvise:''
+          },
         },
 
         question:[
           {
             topic:'以下医保通哪种续保条件您更能接受？',
             options:[
-              'A.一年一保',
-              'B.三年保证续保',
-              'C.五年保证续保',
-              'D.更多年份保证续保',
+              'A.一年一保，费率较现有医保通更低',
+              'B.三年保证续保，费率跟现有医保通差不多',
+              'C.五年保证续保，费率较现有医保通更高',
+              'D.更多年份保证续保，费率较现有医保通明显提高',
+              'E.我有不同意见：'
             ],
             choiceType:'radio',
-            answer:'',
+            answer:{
+              value:'',
+              otherAdvise:'',
+            },
             note:'注：保证续保年份时间越长，费率越高'
           },
           {
-            topic:'您是否接受在购买医保通时，无社保人员费率为有社保人员费率3倍，从而两者享受相同理赔报销政策？',
+            topic:'您是否接受在购买医保通时，无社保人员费率为有社保人员费率的3倍，从而两者享受相同理赔报销政策？',
             options:[
-              '接受',
-              '不接受'
+              'A.接受',
+              'B.不接受',
+              'C.希望两者费率一致，但对免赔额或者报销额度做出不同规定',
+              'D.我有不同意见：',
             ],
             choiceType:'radio',
-            answer:'',
+            answer:{
+              value:'',
+              otherAdvise:'',
+            },
             note:''
           },
           {
-            topic:'请您从以下医保通8个优势中选择出您最感兴趣的',
+            topic:'请您从以下医保通的8个产品特点中选择出您最感兴趣的：（选择3个）',
             options:[
               'A.住院前后门诊费用可报销',
               'B.重大疾病每年有额外100万报销额度',
@@ -70,12 +94,30 @@ export default {
               'E.突破社保，合理且必要的住院医疗费用，包含自费药、进口药等都可报销',
               'F.投保年龄涵盖从28天到65周岁,可续保至终身',
               'G.限额内发生理赔，仍可续保',
-              'H.报销额度高，每年报销额度高达200万'
+              'H.报销额度高，每年报销额度高达200万',
+              'I.我有不同意见：',
             ],
             choiceType:'checkbox',
-            answer:[false,false,false,false,false,false,false,false],
+            answer:{
+              value:[false,false,false,false,false,false,false,false,false],
+              otherAdvise:'',
+            },
             note:''
           },
+          {
+            topic:'为保护老客户的合法权益，凡是投保现有医保通的客户，可以无条件在保单周年日通过保全换成新医保通：',
+            options:[
+              'A.好，我们应该尊重现有老客户的选择权，这样最妥',
+              'B.不好，现有医保通拥有最好的续保条件，完全没必要',
+              'C.我有不同意见：',
+            ],
+            choiceType:'radio',
+            answer:{
+              value:'',
+              otherAdvise:'',
+            },
+            note:'注：如果因不可抗力新医保通没按时上市或者停止销售等情况，不受此条限制'
+          }
         ],
 
         mask:false,
@@ -83,7 +125,7 @@ export default {
       }
     },
     watch:{
-      
+
     },
     computed:{
       
@@ -96,6 +138,29 @@ export default {
       rq()&&rq().luckCode?this.review_ask():'';
     },
     methods:{
+      jud_otheradvise(index,items,checkbox){
+        //index question的第几项
+        //items question中options的第几项
+        if(!checkbox){
+          if(items==this.question[index].options.length-1) this.switch_adviese(true,index);
+          else this.switch_adviese(false,index);
+        }else{
+          setTimeout(()=>{
+            if(this.question[index].answer.value[8]) this.switch_adviese(true,index);
+            else this.switch_adviese(false,index);
+          },100);
+        }
+        
+      },
+      switch_adviese(canWrite,index){
+        let el = $('div.hxradio')[index];
+        if(canWrite){
+          $(el).find('.advise').attr('disabled',false);
+        }else{
+          $(el).find('.advise').attr('disabled',true);
+          this.question[index].answer.otherAdvise='';
+        }
+      },
       review_ask(){
         this.mask=true;
         this.request_answer();
@@ -103,11 +168,7 @@ export default {
       request_answer(){
         ax('findQuestion.do',{'salesmanCode':this.$route.params.id,'luck_code':rq().luckCode},true).then(res=>{
           if(res.result=='succ'){
-            let data = res.data;
-            data.ybt_problem3 = data.ybt_problem3.split(',');
-            data.ybt_problem3.map((v,i)=>{
-              v.indexOf("false")!==-1?data.ybt_problem3[i]=false:v.indexOf("true")!==-1?data.ybt_problem3[i]=true:'';
-            });
+            let data = JSON.parse(res.data.ybt);
             this.answer = data;
             this.get_data();
           }
@@ -117,7 +178,10 @@ export default {
         //为答案赋值
         //遍历问题
         for (let [index, elem] of this.question.entries()) {
-          index==0?elem.answer=this.answer.ybt_problem1:index==1?elem.answer=this.answer.ybt_problem2:elem.answer=this.answer.ybt_problem3;
+          index==0?elem.answer=this.answer.ybt_problem1:
+          index==1?elem.answer=this.answer.ybt_problem2:
+          index==2?elem.answer=this.answer.ybt_problem3:
+          elem.answer=this.answer.ybt_problem4;
         }
       },
       evn(x){//点击跳转
@@ -133,20 +197,30 @@ export default {
       check_empty(){
         //遍历问题
         for (let [index, elem] of this.question.entries()) {
-          index==0?this.answer.ybt_problem1=elem.answer:index==1?this.answer.ybt_problem2=elem.answer:this.answer.ybt_problem3=elem.answer;
+          if(elem.answer.value==(elem.options.length)&&elem.answer.otherAdvise==''&&index!=2){
+            popalert.fade('请您填写您的不同意见');
+            return;
+          }else if(index==2){
+            if(elem.answer.value[8]==true&&elem.answer.otherAdvise==''){
+              popalert.fade('请您填写您的不同意见');
+              return;
+            }
+          }
+
+          index==0?this.answer.ybt_problem1=elem.answer:index==1?this.answer.ybt_problem2=elem.answer:index==2?this.answer.ybt_problem3=elem.answer:this.answer.ybt_problem4=elem.answer;
         }
         let data = this.answer;
         let pass=true;
         for(let i in data){//检查空项
           if(i!='ybt_problem3'){
-            if(data[i]==''){
+            if(data[i].value==''){
               pass = false;
               popalert.fade('您的问卷有未选择项');
               break;
             }
           }else{//判断多选题是否为三个答案
             let correctNum=0;
-            for (let elem of data[i].values()) {
+            for (let elem of data[i].value.values()) {
               elem==true?correctNum++:'';
             }
             if(correctNum!==3) {
@@ -180,41 +254,30 @@ export default {
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
 div.container{
-  background: url('../assets/img/ybt_intro_bg.png') top center; background-size: 100%;position: relative;padding-bottom: 1.3em;
+  background: url('../assets/img/ybt_intro_bg.png') no-repeat top center; background-size: 100%;position: relative;padding-bottom: 1.95rem;padding-top: 13.5rem;
   div.banner{
-    background: url('../assets/img/qbanner.png') no-repeat center center; background-size: 100%;height:17.5em;
+    // background: url('../assets/img/qbanner.png') no-repeat center center; background-size: 100%;height:17.5em;
   }
   div.mask{position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 999;}
   img{width: 100%;}
   a{
     &.btn{
-      display: block;margin:0 5%;width: 90%;background: url('../assets/img/ybt_qustion_btn.png') no-repeat center center; background-size: 100%;height: 5em;text-align:center;
+      display: block;margin:0 20%;width: 60%;background: url('../assets/img/ybt_qustion_btn.png') no-repeat center center; background-size: 100%;height:3em;text-align:center;margin-top: 4.25rem;
     }
   }
   div.add_info{
-    // position: absolute;top: 2em;left: 5%;
-    width:90%;background: @yellowBg;box-shadow: 0px 0px 8px 0px rgba(69,142,204,0.5);padding:.1em 2em 1em;border-radius:4px;position: relative;margin-left: 5%;margin-bottom: 3%;border: @greenBorder;
+    width:90%;background: transparent;padding:0 .5em;border-radius:4px;position: relative;margin-left: 5%;margin-bottom: 3%;
     h2{
-      font-size: 1.2em;font-weight:bold;color: @deepRed;margin:1em 0;position:relative;padding-left: 1.6em;
+      font-size: 1.1em;font-weight:bold;color: @deepRed;margin:.8em 0 ;position:relative;padding-left: 1.6em;
       &.title{
         font-size: 1.2em;line-height: 1.5;
       }
       span{
-        width:1.6em;height:1.6em;position:absolute;top:-.3em;left:-.4em;
-        &.num0{
-          background:url('../assets/img/num1.png') no-repeat center center;background-size:100%;
-        }
-        &.num1{
-          background:url('../assets/img/num2.png') no-repeat center center;background-size:100%;
-        }
-        &.num2{
-          background:url('../assets/img/num3.png') no-repeat center center;background-size:100%;
-        }
-
+        width:1.3em;height:1.3em;position:absolute;top:0em;left:0em;background:@deepRed;border-radius:50%;color:#fff;text-align:center;line-height:1.3;font-weight:normal;
       }
     }
     p{
-      color:#F85F00;
+      color:@deepRed;font-size:.9em;padding-left: 1.4em;
     }
 
     h1{
@@ -222,12 +285,27 @@ div.container{
     }
     .hxradio{
       display: block;color:@deepRed;
+      .advise{
+        position:absolute;top:0;left:8rem;height:1.5rem;outline:none;background:@lightGreen;border:none;margin-top:-.1em;text-align:center;color:#fff;display:block;
+      }
+     .advise::-webkit-input-placeholder{
+            color:#fff;
+        }
+       .advise::-moz-placeholder{   /* Mozilla Firefox 19+ */
+            color:#fff;
+        }
+       .advise:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+            color:#fff;
+        }
+       .advise:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+            color:#fff;
+        }
       label{
-        // width: 32%;display: inline-block;margin-bottom: 1em;
-        margin-bottom:1em;
+        position:relative;
+        margin-bottom:.9em;padding-left:1.3em;
         display:block;
         &:last-child{
-          margin-right: 0;
+          margin-right: 0;width:40%;
         }
       }
       &.long{
@@ -240,6 +318,9 @@ div.container{
       }
       input{
         display: none;
+        &+em{
+          position:absolute;top:.1em;left:0;
+        }
         &[type=radio]{
           &+em{
             display: inline-block;width: 1.3em;height: 1.3em;vertical-align: -.15em;background: url('../assets/img/ybt_radio_nocheck.png') no-repeat center center;background-size: 100%;margin-right: .2em;box-sizing: border-box;transition: all linear .2s;

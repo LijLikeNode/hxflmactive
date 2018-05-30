@@ -46,6 +46,8 @@ const historyStack = {
     watch: {
         '$route' (to, from) {
             document.title=to.meta.txt;
+
+
             if(this.history.length > 0 && to.path == this.history[this.history.length - 1]){
                 this.forward = false;
                 this.history.pop();
@@ -53,6 +55,13 @@ const historyStack = {
                 this.forward = true;
                 this.history.push(from.path);
             }
+            if(to.name=='intro'||to.name=='ybtintro'){
+              let isIphone = navigator.userAgent.includes('iPhone');
+              if(isIphone){
+                window.location.reload();
+              }
+            }
+            
         }
     }
 };
