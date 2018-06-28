@@ -1,11 +1,11 @@
 <template>
     <div class="container page">
       <span></span>
-      <span></span>
+      <span v-if="dateMore"></span>
       <span></span>
       <a class="home_entrance" @click="evn('intro')"></a>
       <a class="rank_entrance" @click="evn('rank')"></a>
-      <a class="ybt_entrance" @click="evn('ybt_intro')"></a>
+      <a class="ybt_entrance" @click="evn('ybt_intro')" v-if="dateMore"></a>
     </div>
   
 </template>
@@ -16,6 +16,11 @@ export default {
     data(){
       return {
         
+      }
+    },
+    computed:{
+      dateMore(){
+          return window.dateTime=='less'?true:false;
       }
     },
     mounted(){

@@ -1,27 +1,36 @@
 <template>
     <div class="container page">
-      <!-- <div class="banner"></div> -->
-
-      <div class="add_info" v-for="(item,index) in question" :key="index">
-        <h2><span>{{index+1}}</span>{{item.topic}}</h2>
-        <div class="hxradio">
-          <!-- 单选框 -->
-          <label v-if="item.choiceType=='radio'" v-for="(val,i) in item.options">
-            <input :type="item.choiceType" v-model="item.answer.value" :value="item.choiceType=='radio'?i+1:false"  @click.stop="jud_otheradvise(index,i)">
-            <em></em>{{val}}
-            <input class="advise" v-if="i==item.options.length-1" placeholder="请输入您的意见" v-model="item.answer.otherAdvise" disabled type="text" >
-          </label>
-          <!-- 复选框 -->
-          <label v-if="item.choiceType=='checkbox'" v-for="(val,i) in item.options">
-            <input :type="item.choiceType" v-model="item.answer.value[i]" @click.stop="jud_otheradvise(index,i,true)">
-            <em></em>{{val}}
-            <input class="advise" v-if="i==item.options.length-1" disabled v-model="item.answer.otherAdvise" placeholder="请输入您的意见" type="text">
-          </label>
-        </div>
-        <p v-if="item.note!=''">{{item.note}}</p>
+      <div class="banner">
+        <img src="../assets/img/ybt_intro_bg_1.png" alt="">
       </div>
+      <!-- <img src="../assets/img/ybt_intro_bg.png" alt=""> -->
+      <div class="con">
+        <div class="add_info" v-for="(item,index) in question" :key="index">
+          <h2><span>{{index+1}}</span>{{item.topic}}</h2>
+          <div class="hxradio">
+            <!-- 单选框 -->
+            <label v-if="item.choiceType=='radio'" v-for="(val,i) in item.options">
+              <input :type="item.choiceType" v-model="item.answer.value" :value="item.choiceType=='radio'?i+1:false"  @click.stop="jud_otheradvise(index,i)">
+              <em></em>{{val}}
+              <input class="advise" v-if="i==item.options.length-1" placeholder="请输入您的意见" v-model="item.answer.otherAdvise" disabled type="text" >
+            </label>
+            <!-- 复选框 -->
+            <label v-if="item.choiceType=='checkbox'" v-for="(val,i) in item.options">
+              <input :type="item.choiceType" v-model="item.answer.value[i]"  @click.stop="jud_otheradvise(index,i,true)">
+              <em></em>{{val}}
+            </label>
+            <input class="advise checkbox" v-if="item.choiceType=='checkbox'" disabled v-model="question[2].answer.otherAdvise" placeholder="请输入您的意见" type="text">
+          </div>
+          <p v-if="item.note!=''">{{item.note}}</p>
+        </div>
+      </div>
+      <div class="footer">
+        <img src="../assets/img/ybt_intro_bg_3.png" alt="">
+        <a v-if="!mask" class="btn" @click="evn"></a>
+      </div>
+      
 
-      <a v-if="!mask" class="btn" @click="evn"></a>
+      
       <div v-if="mask" class="mask"></div>
     </div>
   
@@ -88,10 +97,10 @@ export default {
             topic:'请您从以下医保通的8个产品特点中选择出您最感兴趣的：（选择3个）',
             options:[
               'A.住院前后门诊费用可报销',
-              'B.重大疾病每年有额外100万报销额度',
+              'B.重大疾病每年有100万报销额度',
               'C.疾病等待期仅为30天',
               'D.产品费率较低，30岁首次投保仅需308元',
-              'E.突破社保，合理且必要的住院医疗费用，包含自费药、进口药等都可报销',
+              'E.突破社保，合理且必要的住院医疗费用，包含自费药、进口药等',
               'F.投保年龄涵盖从28天到65周岁,可续保至终身',
               'G.限额内发生理赔，仍可续保',
               'H.报销额度高，每年报销额度高达200万',
@@ -138,6 +147,9 @@ export default {
       rq()&&rq().luckCode?this.review_ask():'';
     },
     methods:{
+      fuck(){
+        // alert(111)
+      },
       jud_otheradvise(index,items,checkbox){
         //index question的第几项
         //items question中options的第几项
@@ -254,26 +266,34 @@ export default {
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
 div.container{
-  background: url('../assets/img/ybt_intro_bg.png') no-repeat top center; background-size: 100%;position: relative;padding-bottom: 1.95rem;padding-top: 13.5rem;
+  // background: url('../assets/img/ybt_intro_bg.png') no-repeat top center; background-size: 100%;position: relative;padding-bottom: 1.95rem;padding-top: 52%;
+  div.con{
+    // position:absolute;top:17%;
+    background:url('../assets/img/ybt_intro_bg_2.png');background-size:100%;margin-top:-.1em;padding-top:1em;
+  }
   div.banner{
     // background: url('../assets/img/qbanner.png') no-repeat center center; background-size: 100%;height:17.5em;
+    img{display:block;}
   }
   div.mask{position: fixed;top: 0;left: 0;width: 100%;height: 100%;z-index: 999;}
   img{width: 100%;}
   a{
     &.btn{
-      display: block;margin:0 20%;width: 60%;background: url('../assets/img/ybt_qustion_btn.png') no-repeat center center; background-size: 100%;height:3em;text-align:center;margin-top: 4.25rem;
+      display: block;margin:0 20%;width: 60%;background: url('../assets/img/ybt_qustion_btn.png') no-repeat center center; background-size: 100%;height:3em;text-align:center;position:absolute;bottom:3%;
     }
   }
   div.add_info{
-    width:90%;background: transparent;padding:0 .5em;border-radius:4px;position: relative;margin-left: 5%;margin-bottom: 3%;
+    width:90%;background: transparent;padding:0 .5em;border-radius:4px;position: relative;margin-left: 5%;margin-bottom: 3%;font-size:1em;
+    &:last-child{
+      margin-bottom:0;
+    }
     h2{
-      font-size: 1.1em;font-weight:bold;color: @deepRed;margin:.8em 0 ;position:relative;padding-left: 1.6em;
+      font-size: 1.2em;font-weight:bold;color: @deepRed;margin:3% 0 ;position:relative;padding-left: 1.6em;
       &.title{
         font-size: 1.2em;line-height: 1.5;
       }
       span{
-        width:1.3em;height:1.3em;position:absolute;top:0em;left:0em;background:@deepRed;border-radius:50%;color:#fff;text-align:center;line-height:1.3;font-weight:normal;
+        width:1.3em;height:1.3em;position:absolute;top:0;left:0em;background:@deepRed;border-radius:50%;color:#fff;text-align:center;line-height:1.3;font-weight:normal;
       }
     }
     p{
@@ -286,7 +306,10 @@ div.container{
     .hxradio{
       display: block;color:@deepRed;
       .advise{
-        position:absolute;top:0;left:8rem;height:1.5rem;outline:none;background:@lightGreen;border:none;margin-top:-.1em;text-align:center;color:#fff;display:block;
+       height:1.5rem;outline:none;background:@lightGreen;border:none;margin-top:-.1em;text-align:center;color:#fff;display:inline-block;
+       &.checkbox{
+        position:absolute;bottom:-.3em;left:35%;
+       }
       }
      .advise::-webkit-input-placeholder{
             color:#fff;
@@ -302,12 +325,10 @@ div.container{
         }
       label{
         position:relative;
-        margin-bottom:.9em;padding-left:1.3em;
+        margin-bottom:2.5%;padding-left:1.7em;
         display:block;
-        &:last-child{
-          margin-right: 0;width:40%;
-        }
       }
+
       &.long{
         label{
           width:42%;margin-right: 1.2em;
@@ -319,19 +340,19 @@ div.container{
       input{
         display: none;
         &+em{
-          position:absolute;top:.1em;left:0;
+          position:absolute;top:0rem;left:0;
         }
         &[type=radio]{
           &+em{
-            display: inline-block;width: 1.3em;height: 1.3em;vertical-align: -.15em;background: url('../assets/img/ybt_radio_nocheck.png') no-repeat center center;background-size: 100%;margin-right: .2em;box-sizing: border-box;transition: all linear .2s;
+            display: inline-block;width: 1.3em;height: 1.3em;vertical-align: -.15em;background: url('../assets/img/ybt_radio_nocheck.png') no-repeat center center;background-size: 98%;margin-right: .2em;box-sizing: border-box;
           }
           &:checked + em{
-            background: url('../assets/img/ybt_radio_check.png') no-repeat center center;background-size: 100%;
+            background: url('../assets/img/ybt_radio_check.png') no-repeat center center;background-size: 98%;
           }
         }
         &[type=checkbox]{
           &+em{
-            display: inline-block;width: 1.2em;height: 1.2em;vertical-align: -.15em;background: url('../assets/img/ybt_box_nocheck.png') no-repeat center center;background-size: 99%;margin-right: .2em;box-sizing: border-box;transition: all linear .2s;
+            display: inline-block;width: 1.2em;height: 1.2em;vertical-align: -.15em;background: url('../assets/img/ybt_box_nocheck.png') no-repeat center center;background-size: 99%;margin-right: .2em;box-sizing: border-box;
           }
           &:checked + em{
             background: url('../assets/img/ybt_box_check.png') no-repeat center center;background-size: 99%;
