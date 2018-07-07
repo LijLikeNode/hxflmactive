@@ -37,7 +37,7 @@ export default {
         has_more:false,
         seText:'产品评鉴',
         selectList:[{name:'产品评鉴'},{name:'保障体验'}],
-        type:'',
+        type:'ncqs',
       }
     },
     components:{SingleSelect},

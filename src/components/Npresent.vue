@@ -1,7 +1,7 @@
 <template>
   <div class="container page">
     <div class="con">
-      <div :class="['lottery_draw',{'rotate':canRoll},{'rotate1':level.one},{'rotate2':level.two},{'rotate3':level.three},{'rotate4':level.four},{'rotate5':level.five},{'rotate6':level.six},{'rotate7':level.seven},{'rotate8':level.eight},{'rotate9':level.nine},{'rotate10':level.ten}]"></div>
+      <div :class="['lottery_draw',{'rotate':canRoll},{'rotate1':level.one},{'rotate2':level.two},{'rotate3':level.three},{'rotate4':level.four},{'rotate5':level.five},{'rotate6':level.six},{'rotate7':level.seven},{'rotate8':level.eight}]"></div>
       <div class="click_start" @click="rotate_start"></div>
     </div>
     <div class="add_info">
@@ -53,14 +53,11 @@ export default {
           six:false,
           seven:false,
           eight:false,
-          nine:false,
-          ten:false
         },
         workcode:{
-          '特等奖':'Apple iMac 21.5英寸一体机',
-          '一等奖':'iPhone X 手机（256G）',
-          '二等奖':'iPad mini 平板电脑（128G WLAN）',
-          '三等奖':'家用儿童紧急医药包',
+          '一等奖':'MacBook Pro 11.6英寸笔记本电脑',
+          '二等奖':'小米空气净化器2',
+          '三等奖':'小米智能手环2',
           '四等奖':'华夏精品活动参与卡',
         }
       }
@@ -90,20 +87,11 @@ export default {
               },1000);
               let level = response.level;
               setTimeout(()=>{
-                level == 1 ? this.level.one = true : level == 2 ? this.level.two = true : level == 3 ? this.level.three = true : level == 4 ? this.level.four = true : level == 5 ? this.level.five = true : level == 6 ? this.level.six = true : level == 7 ? this.level.seven = true :level == 8 ? this.level.eight = true:level == 9 ? this.level.nine = true:level == 10 ? this.level.ten = true:'';
+                level == 1 ? this.level.one = true : level == 2 ? this.level.two = true : level == 3 ? this.level.three = true : level == 4 ? this.level.four = true : level == 5 ? this.level.five = true : level == 6 ? this.level.six = true : level == 7 ? this.level.seven = true : this.level.eight = true;
               },1500);
-
-              let present = {
-                num0:'特等奖  Apple iMac 21.5英寸一体机',
-                num1:'一等奖  iPhone X 手机（256G）',
-                num2:'二等奖  iPad mini 平板电脑（128G WLAN）',
-                num3:'三等奖  家用儿童紧急医药包',
-                num4:'四等奖  华夏精品活动参与卡',
-              }
-
-
+              
               setTimeout(()=>{
-                this.tipmsg = `恭喜您获得<br/>${level == 1 ? present.num1 : level == 2 ? present.num2 : level == 3 ? present.num3 : level == 4 ? present.num4 : level == 5 ? present.num1 : level == 6 ? present.num2 : level == 7 ? present.num3 : level == 8 ? present.num4 : level == 9 ? present.num0 : level == 10 ? present.num0 :''}`;
+                this.tipmsg = `恭喜您获得<br/>${level == 1 ? '一等奖 MacBook Pro 11.6英寸笔记本电脑' : level == 2 ? '二等奖 小米空气净化器2' : level == 3 ? '三等奖 小米智能手环2' : level == 4 ? '四等奖 华夏精品活动参与卡' : level == 5 ? '一等奖 MacBook Pro 11.6英寸笔记本电脑' : level == 6 ? '二等奖 小米空气净化器2' : level == 7 ? '三等奖 小米智能手环2' : '四等奖 华夏精品活动参与卡'}`;
                 this.prompts = true;//这个是弹层的半透明黑色背景，没有过渡和动画
                 setTimeout(()=>this.prompts2=true,50);//这个是展示几等奖的面板  有向下滑动的动画
                 this.noStop=false;
@@ -143,8 +131,6 @@ export default {
           six:false,
           seven:false,
           eight:false,
-          nine:false,
-          ten:false
         }
         this.big = false;
         this.small = false;
@@ -156,7 +142,7 @@ export default {
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
 div.container{
-  background: url('../assets/img/new/newBg.png') center top; background-size: 100%;height: 100%;overflow: hidden;
+  background: url(../assets/img/bg2.png) no-repeat center center; background-size: 100%;background-position: cover;height: 100%;overflow: hidden;
   div.start_extend,div.end_extend{
     position: fixed;width: 5.5em;height: 5.5em;top: 40%;transform: translateY(-50%);transition: all .5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
@@ -171,7 +157,7 @@ div.container{
     &.toright{ right:0;margin-right: -100%;transform: scale(.8);}
   }
   div.add_info{
-     position: absolute;bottom: 3%;width:90%;left: 5%;padding:3.2em 0em .5em;background:#faf7e9;border-radius:8px;
+     position: absolute;bottom: 6%;width:90%;left: 5%;padding:3.2em 0em .5em;background:#fff;border-radius:8px;
     .row-bg{
       .grid-content{
         text-align: center;font-size:1.2em;margin-bottom:.5em;color:rgb(82,158,42);
@@ -185,9 +171,9 @@ div.container{
     }
   }
   div.con{
-    position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:90%;height:30em;border-radius: 100px;
+    position:absolute;top:35%;left:50%;transform:translate(-50%,-50%);width:90%;height:30em;border-radius: 100px;
     div.lottery_draw{
-      width:100%;height:100%;background:url(../assets/img/new/n_dail.png) no-repeat center center;background-size:100%;position: absolute;top: 0;left: 0;
+      width:100%;height:100%;background:url(../assets/img/dial.png) no-repeat center center;background-size:100%;position: absolute;top: 0;left: 0;
       &.rotate{
         .animation(rotate 800ms linear infinite);
       }
@@ -215,66 +201,47 @@ div.container{
       &.rotate8{
         .animation(rotate8 10000ms cubic-bezier(0, 0, .30, 1) forwards);
       }
-      &.rotate9{
-        .animation(rotate9 10000ms cubic-bezier(0, 0, .30, 1) forwards);
-      }
-      &.rotate10{
-        .animation(rotate10 10000ms cubic-bezier(0, 0, .30, 1) forwards);
-      }
     }
     div.click_start{
-      position:absolute;top:48.5%;left:50%;transform:translate(-50%,-50%);width:26%;height:10em;background:url(../assets/img/new/n_indicator.png) no-repeat center center;background-size:100%;
+      position:absolute;top:48.5%;left:50%;transform:translate(-50%,-50%);width:26%;height:10em;background:url(../assets/img/indicator.png) no-repeat center center;background-size:100%;
     }
   } 
 }
-
-@cell:2160deg;
-@single:36deg;
-@half:18deg;
-
 .keyframes(rotate;{
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single+@half));}
+  100%{.transform(rotate(2182.5deg));}
 });
 .keyframes(rotate1;{//1
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*3+@half));}
+  100%{.transform(rotate(1957.5deg));}
 });
 .keyframes(rotate2;{//2
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*2+@half));}
+  100%{.transform(rotate(1912.5deg));}
 });
 .keyframes(rotate3;{//3
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*1+@half));}
+  100%{.transform(rotate(1867.5deg));}
 });
 .keyframes(rotate4;{//4
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@half));}
+  100%{.transform(rotate(2002.5deg));}
 });
 .keyframes(rotate5;{//5
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*8+@half));}
+  100%{.transform(rotate(2137.5deg));}
 });
 .keyframes(rotate6;{//6
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*7+@half));}
+  100%{.transform(rotate(2092.5deg));}
 });
 .keyframes(rotate7;{//7
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*6+@half));}
+  100%{.transform(rotate(2047.5deg));}
 });
 .keyframes(rotate8;{//8
   0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*5+@half));}
-});
-.keyframes(rotate9;{//9
-  0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*9+@half));}
-});
-.keyframes(rotate10;{//10
-  0%{.transform(rotate(0deg));}
-  100%{.transform(rotate(@cell+@single*4+@half));}
+  100%{.transform(rotate(2182.5deg));}
 });
 .mask{
   background:rgba(0,0,0,.7);position:fixed;width:100%;height:100%;z-index: 10;display: block;

@@ -6,7 +6,9 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
-import $ from 'jquery';
+import './assets/js/jquery.min.js';
+import './assets/css/mpicker.css'
+import './assets/js/mPicker.js'
 import common from './ajaxrequest/common'
 import ax from './ajaxrequest/ajaxPromise';
 // import {hxajax} from './ajaxrequest/jqueryAjax';
@@ -19,6 +21,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/js/noshare';
 import './assets/js/weChat_share.js';
 import './assets/js/setDate.js';
+import {DateTime} from 'vue-ydui/dist/lib.rem/datetime';
+//import VConsole from 'vconsole/dist/vconsole.min.js' //import vconsole
+// let vConsole = new VConsole() // 初始化
+Vue.component(DateTime.name, DateTime);
 
 
 Vue.use(Row);
@@ -28,7 +34,7 @@ Vue.config.productionTip = false;
 
 
 // console.log(vConsole)
-window.$ = $;
+// window.$ = $;
 window.ax = ax;
 // window.jqax = hxajax;
 window.rq = rq;

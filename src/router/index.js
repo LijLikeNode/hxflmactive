@@ -8,6 +8,11 @@ import Intro from '@/components/Intro'
 import YbtIntro from '@/components/YbtIntro'
 import Question from '@/components/Question'
 import YbtQuestion from '@/components/YbtQuestion'
+import ForecastYbt from '@/components/ForecastYbt'
+import Plan from '@/components/Plan'
+import Nindex from '@/components/Nindex'
+import Team from '@/components/Team'
+import Rankn from '@/components/Rankn'
 
 Vue.use(Router)
 
@@ -60,7 +65,43 @@ Vue.use(Router)
       name: 'rank',
       component: Rank,
       meta:{txt:'排行榜'}
-    }
+    },
+    {
+      path: '/rank',
+      name: 'rank',
+      component: Rank,
+      meta:{txt:'排行榜'}
+    },
+    {
+      path: '/rankn',
+      name: 'rank',
+      component: Rankn,
+      meta:{txt:'排行榜'}
+    },
+    {
+      path: '/forecastybt',
+      name: 'forecastybt',
+      component: ForecastYbt,
+      meta:{txt:'生成计划书'}
+    },
+    {
+      path: '/planbook/:salesmanid/:luck_code',
+      name: 'planbook',
+      component: Plan,
+      meta:{txt:'计划书详情'}
+    },
+    {
+      path: '/index',
+      name: 'nindex',
+      component: Nindex,
+      meta:{txt:'抽奖回执'}
+    },
+    {
+      path: '/team',
+      name: 'team',
+      component: Team,
+      meta:{txt:'团队获客'}
+    },
   ]
 });
 router.beforeEach((to, from, next) => {

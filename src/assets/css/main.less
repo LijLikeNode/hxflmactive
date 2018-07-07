@@ -1,5 +1,5 @@
 @black:#202020;
-@font:#4a4a4a;
+@fontGray:#4a4a4a;
 @gray:#9b9b9b;
 @bggray:#f7f7f9;
 @blue:#4faef9;
@@ -145,4 +145,104 @@ hr{
 }
 .slide-left-leave-to,.slide-right-enter{
 	transform:translateX(-100%);opacity:1;
+}
+
+
+
+
+/* 选择插件 */
+body{
+	.mPicker-footer{
+		border:none;height: auto;position: absolute;top:0;width:100%;left:0;line-height: 3.3;
+	}
+	.mPicker-confirm, .mPicker-cancel{
+		position: absolute;left:3%;width:auto;font-size: 1.1em;
+	}
+	.mPicker-confirm{
+		left:auto;right:3%;background: none;color:#333;border: none;
+	}
+	.mPicker-confirm:active, .mPicker-confirm:hover, .mPicker-cancel:active, .mPicker-cancel:hover{
+		color:#333;background: none;
+	}
+	.mPicker-shadow{
+		bottom:0;top: 3.6rem;margin-top: 1px;
+	}
+	.mPicker-header{
+		height: auto;font-size: 1.2em;line-height: 3;color:@deepRed;border-bottom-color: @deepRed;
+	}
+	.mPicker-content li{
+		height: auto;font-size: 1em;
+	}
+	.mPicker-active-box{
+		border-bottom-color: @deepRed;border-top-color: @deepRed;
+	}
+
+	/* yd vui */
+	.datetime-head>a:last-child{
+		color:@deepRed;
+	}
+	.list-loading img{height:1.66rem;}
+	.list-donetip{font-size: 1rem;padding: .5rem 0;color: #bfbfbf;}
+
+	.newsdetail img{
+		margin-left: -1em;
+	}
+	.newsdetail div.img img{margin:0;}
+	div.noData{text-align: center;}
+	div .yd-list-donetip{font-size: 0.7rem; color: #bfbfbf;}
+	/* yd district picker */
+	.yd-cityselect-title{
+		font-size: 1.1rem;height: 3.5em;line-height: 3.5em;
+	}
+	.yd-cityselect-item-box > a,.yd-cityselect-nav > a{
+		font-size: 1rem;height: 3.6em;line-height: 3.6em;
+	}
+	.yd-cityselect-item-box > a span{
+		font-size: 1rem;
+	}
+	.yd-cityselect-content{
+		padding-top: 7.4rem;
+	}
+	.cqtselect input{text-align: center;}
+	dd.specialdd{
+		height: 2.8em;
+		border: 1px solid #ccc;
+		line-height: 2.8em;
+		margin-top: 0.5em;
+		position: relative;
+		left: -0.5em;
+		padding-left: 2.5em;
+	}
+	dd.specialdd img{
+		width: 1.2em;
+		position: absolute;
+		top: 0.7em;
+		left: 0.5em;
+	}
+	dl.bdyxq dd p{
+		width: 100%;
+		line-height: 1.5em;
+		white-space: normal;
+		position: relative;
+		top:0.5em;
+		color: @fontGray;
+	}
+	p.fillmlbtip{
+		width: 100%;height: 2em;line-height: 2em;margin: 0 4.5% 1em;color:@fontGray;font-size: 0.9em;
+	}
+	dd.specialdd .yd-datetime-input{
+		height: 2.8em;
+		line-height: 2.8em;
+	}
+	.yd-datetime-input.birthday{
+		position: absolute;
+		right: 1em;
+		width: 70%;
+		text-align: right;
+		color: #bfbfbf;
+	}
+	/*mpicker*/
+	div.id_type input{text-align:right;color:@fontGray;}
+	.yd-datetime-head > a:last-child{color:@deepRed;}
+	.selectlh input{text-align: center;height: 100%;width: 100%;}
 }
