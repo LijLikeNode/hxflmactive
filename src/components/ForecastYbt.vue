@@ -5,8 +5,17 @@
         <div class="middle">
           <div class="animal"></div>
           <dl>
-            <dt>您给谁买：</dt>
-            <dd><input type="text" placeholder="请输入被保人姓名" v-model="name"></dd>
+            <dt>我　　给：</dt>
+            <dd class="forecastybt-wg">
+              <single-select class="inputs inputs-wg" :opts="relationshipList" v-model="relText" @change="changeRel"></single-select>
+              <span  class="pos-rel">设计保障</span>
+            </dd>
+          </dl>
+           <dl>
+            <dt>姓　　名：</dt>
+            <dd class="rel-mine">
+              <input type="text" placeholder="请输入被保人姓名" v-model="name">
+            </dd>
           </dl>
           <dl>
             <dt>性　　别：</dt>
@@ -22,19 +31,26 @@
             <dd><select-date ref="birth" @query="queryRate"></select-date></dd>
           </dl>
           <dl>
-            <dt>交费期间：</dt>
-            <dd><single-select class="inputs" :opts="payList" v-model="payText" @change="choosePayment"></single-select></dd>
-          </dl>
-          <dl>
-            <dt>有无医保：</dt>
+            <dt><span>被保险人</span><span>是否有医保：</span></dt>
             <dd>
-              <div class="hxradio">
+              <div class="hxradio hxradio-isMast">
                 <label><input type="radio" v-model="hasybt" value="Y"><em></em>有</label>
                 <label><input type="radio" v-model="hasybt" value="N"><em></em>无</label>
               </div>
             </dd>
           </dl>
+          <p class="text-color" >备注：职工医保、城镇医保、新农合、大学生医保皆属于有医保。</p>
           <dl>
+            <dt><span>重疾保额：</span><span>常青树多倍版</span></dt>
+            <dd><input style="width:60%;" type="number" ref="cov" placeholder="请您输入保额" v-model="coverage"> 万元</dd>
+          </dl>
+          <p class="text-color">备注:最低1万,建议为年收入的10倍,通常在20万以上</p>
+          <dl>
+            <dt><span>交费期间：</span><span>常青树多倍版</span></dt>
+            <dd><single-select class="inputs inputs-qj" :opts="payList" v-model="payText" @change="choosePayment"></single-select></dd>
+          </dl>
+          <p class="text-color">附加医保通2.0，每年享受最高500万保障额度。</p>
+          <!-- <dl>
             <dt>质子重离子：</dt>
             <dd>
               <div class="hxradio">
@@ -42,37 +58,34 @@
                 <label><input type="radio" v-model="hasflz" value="N"><em></em>无</label>
               </div>
             </dd>
-          </dl>
-          <dl>
-            <dt>保　　额：</dt>
-            <dd><input type="text" ref="cov" placeholder="请您输入保额" v-model="coverage"></dd>
-          </dl>
+          </dl> -->
           <div class="showPrem">
             <div class="left">
               保　　费：
             </div>
             <div class="right">
               <dl>
-                <dt>新常青树：</dt>
+                <dt>常青树(多倍版):</dt>
                 <dd><input type="text" readonly v-model="cqsPrem"></dd>
               </dl>
               <dl>
-                <dt>新医保通：</dt>
+                <dt>医保通2.0版:</dt>
                 <dd><input type="text" readonly v-model="ybtPrem"></dd>
               </dl>
               <dl>
-                <dt>总　　计：</dt>
-                <dd><input type="text" readonly v-model="totalPrem"></dd>
+                <dt>总计:</dt>
+                <dd><input style="position:absolute;width:120%;left:-1.4em;" type="text" readonly v-model="totalPrem"></dd>
               </dl>
             </div>
+            
             <div style="clear:both;"></div>
           </div>
+          <div class="btn" @click="submitInfo"><p>做好啦!<br>我要看我做的详细保障计划</p></div>
+          <div class="btns"></div>
         </div>
         <div class="bottom"></div>
       </div>
-      <div class="btn" @click="submitInfo">
-        
-      </div>
+      
     </div>
   
 </template>
@@ -87,11 +100,13 @@ export default {
         sex:'M',
         ybtRate:'',
         cqsRate:'',
-        coverage:10000,
-        payText:'1年',
+        coverage:30,
+        payText:'20年',
+        relText: '本人',
         hasybt:'Y',
         hasflz:'Y',
         payList:[{name:'1年'},{name:'3年'},{name:'5年'},{name:'10年'},{name:'15年'},{name:'20年'}],
+        relationshipList:[{name:'本人'},{name:'父亲'},{name:'母亲'},{name:'丈夫'},{name:'妻子'},{name:'儿子'},{name:'女儿'}]
       }
     },
     components:{SelectDate,SingleSelect},
@@ -101,13 +116,13 @@ export default {
         return this.$refs.birth.age;
       },
       cqsPrem(){
-        return Math.round(this.cqsRate/1000*100)/100*this.coverage;
+        return Math.round(this.cqsRate/1000*this.coverage*10000*100)/100+'元';
       },
       ybtPrem(){
-        return this.ybtRate;
+        return this.ybtRate+'元';
       },
       totalPrem(){
-        return Number(this.cqsPrem) + Number(this.ybtPrem);
+        return (parseInt(this.cqsPrem) + parseInt(this.ybtPrem)) + '元';
       },
       payment(){
         return parseInt(this.payText);
@@ -138,16 +153,16 @@ export default {
       this.queryRate();
       let el = $(this.$refs.cov);
       el.blur((e)=>{
-        console.log(e.target.value);
+        // console.log(e.target.value);
         let value = e.target.value;
-        if(value<1000){
-          popalert.fade('保额不能低于1000元');
-          this.coverage = 10000;
+        if(value<1){
+          popalert.fade('保额不能低于1万元');
+          this.coverage = 30;
           return;
         }
-        if(value%1000!=0){
+        if( String(Math.round(value/0.1*100)/100).indexOf('.') != -1){
           popalert.fade('保额必须是1000的整数倍');
-          this.coverage = 10000;
+          this.coverage = 30;
           return;
         }
       })
@@ -155,6 +170,9 @@ export default {
     methods:{
       choosePayment(val){
         this.payText = val;
+      },
+      changeRel (val) {  // 关系
+        this.relText = val;
       },
       evn(x){//点击跳转
         x=='intro'?this.to_intro():x=='rank'?this.to_rank():this.to_ybtintro();
@@ -177,10 +195,10 @@ export default {
           sex:this.sex,
           birth:this.$refs.birth.date,
           age:this.$refs.birth.age,
-          coverage:this.coverage,
-          cqsPrem:this.cqsPrem,
-          ybtPrem:this.ybtPrem,
-          totalPrem:this.totalPrem,
+          coverage:Math.round(this.coverage*10000*100)/100,
+          cqsPrem:parseInt(this.cqsPrem),
+          ybtPrem:parseInt(this.ybtPrem),
+          totalPrem:parseInt(this.totalPrem),
           hasybt:this.hasybt,
           payment:this.payment,
           hasflz:this.hasflz,
@@ -217,8 +235,44 @@ export default {
 
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
+
 div.container{
   background: url('../assets/img/new/newBg.png') center top; background-size: 100%;position: relative;padding-top: 4em;padding-bottom:2em;
+  
+  .forecastybt-wg{
+    .pos-rel{
+      position: absolute;
+      right: 1em;
+      top: -.3em;
+      padding:0;
+    }
+    .inputs-wg{
+      width: 60%;
+    }
+  }
+  .inputs-qj{
+    position: relative;
+    top: 0.4em;
+  }
+  .text-color{
+    color: #999593;
+    margin-top: 0.7em;
+    margin-bottom: .4em;
+  }
+  dl{
+    dt{
+      position: relative;
+      span{
+        font-weight: bold;
+      
+        &:nth-child(2){
+          position: absolute;
+          left: 0;
+          bottom: -1.2em;
+        }
+      }
+    }
+  }
   div.con{
     width: 90%;margin-left: 5%;
 
@@ -232,13 +286,14 @@ div.container{
       background:url('../assets/img/new/n_bgs.png')  center 0;background-size:100%;position:relative;
       padding:0 8% 8em;
       .animal{
-        position:absolute;bottom:-13em;right:0;width:23em;height:23em;background:url('../assets/img/new/n_bird.png') no-repeat center center ;background-size:100%;z-index: 100;
+        position:absolute;bottom:-6em;right:0;width:23em;height:23em;background:url('../assets/img/new/n_bird.png') no-repeat center center ;background-size:100%;z-index: 100;
       }
     }
     dl{
       height:2.5em;line-height: 2.5;font-size: 1.1em;
       dt{
-        display: inline-block;width: 6.5em;text-align:right;
+        display: inline-block;width: 6.5em;
+        // text-align:right;
       }
       dd{
         display: inline-block;width:65%;position:relative;
@@ -247,6 +302,10 @@ div.container{
         }
       }
     }
+  }
+  .hxradio-isMast{
+    position: relative;
+    top: .6em;
   }
   .hxradio{
     display: block;
@@ -291,16 +350,20 @@ div.container{
   }
   .showPrem{
     .left{
-      float: left;height:2em;line-height: 2;font-size: 1.1em;width:6em;text-align:right;
+      float: left;height:2em;line-height: 2;font-size: 1.1em;width:6em;
+      // text-align:right;
     }
     .right{
       float:left;width:70%;margin-top: -.1em;
       dl {
+        position: relative;
         dt{
           width:auto;
         }
         dd{
-          width:55%;
+          width:45%;
+          position: absolute;
+          right: 0;
           input{
             width:100%;background:transparent;
           }
@@ -308,8 +371,16 @@ div.container{
       }
     }
   }
+  .btns{
+    margin-top:6.5em
+  }
   .btn{
-    width:72%;height:2.5em;margin: 0 auto;background:url('../assets/img/new/n_btn.png') no-repeat center center ;background-size:100%;margin-top:4em;
+    width:80%;margin: 0 auto;background:#1a9731;margin-top:1em;text-align:center;color:#fff;padding:.5em 0;
+    p{
+      border-top:1px solid #fff;
+      border-bottom:1px solid #fff;
+      padding:.2em 0;
+    }
     -webkit-box-shadow: 0 0 5px #000;
   -moz-box-shadow: 0 0 5px #000;
   box-shadow: 0 0 5px #000;
@@ -317,8 +388,7 @@ div.container{
 
   }
   .inputs{
-    background: #d8e48d;outline: none;border:1px solid #1b9832;height:2em;line-height:2;padding-left: .2em;width:50%;
+    background: #d8e48d;outline: none;border:1px solid #1b9832;height:2em;line-height:2;padding-left: .2em;width:96%;
   }
 }
-
 </style>

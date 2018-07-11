@@ -13,7 +13,19 @@
             <span>{{v.num}}</span>
         </p>
       </div>
-      <img src="../assets/img/bg_intro.png">
+
+      <img src="../assets/img/guide/guide1.jpg">
+      <img src="../assets/img/guide/guide2.jpg">
+      <img src="../assets/img/guide/guide3.jpg">
+      <img src="../assets/img/guide/guide4_1.png">
+      <img src="../assets/img/guide/guide4_2.png">
+      <img src="../assets/img/guide/guide4_3.png">
+      <img src="../assets/img/guide/guide5.jpg">
+      <img src="../assets/img/guide/guide6.jpg">
+      <img src="../assets/img/guide/guide7.jpg">
+      <img src="../assets/img/guide/guide8.jpg">
+      <img src="../assets/img/guide/guide9.jpg">
+      <img src="../assets/img/guide/guide10.jpg">
       <a @click="evn">{{btn_text}}</a>
       <transition name="fade">
         <div class="guide_mask" v-show="guide" @click="guide=false">
@@ -24,6 +36,7 @@
   
 </template>
 <script>
+
 export default {
     name: 'intro',
     data(){
@@ -65,8 +78,9 @@ export default {
     },
     mounted(){
       // console.log(this.$route.name)
+      // doShare("","五年交费换来一生现金流？福临门（少儿版）请您参与有奖评鉴!","福临门好不好？您说了算！五年交费换来一生现金流？福临门（少儿版）请您参与有奖评鉴","http://zmt.ihxlife.com/tenyears2/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
       doShare("","五年交费换来一生现金流？福临门（少儿版）请您参与有奖评鉴!","福临门好不好？您说了算！五年交费换来一生现金流？福临门（少儿版）请您参与有奖评鉴","http://zmt.ihxlife.com/tenyears/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
-      // doShare("","填问卷 抽大奖","新福临门上市有奖评鉴  春暖花开华夏好礼相赠","http://test.hxlife.com/csf/tenyears/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
+      // doShare("","填问卷 抽大奖","新福临门上市有奖评鉴  春暖花开华夏好礼相赠","http://test.hxlife.com/csf/tenyears/#/intro/"+this.$route.params.id+"?type=cust",'http://zmt.ihxlife.com/tenyears/pic.png');
     },
     methods:{
       evn(){//判断来源 业务员OR客户
@@ -84,41 +98,29 @@ export default {
 
 <style lang='less' scoped>
 @import url(../assets/css/main.less);
+.textCenter{
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.4em;
+  margin: .4em 0;  
+}
+.fontWeight{
+  line-height: 1.4em;
+  font-size: 1.2em;
+}
 div.container{
-  // background: url(../assets/img/bg_intro.png) no-repeat center center; background-size: cover;position: relative;
-  padding-bottom: 6em;background:#fff;padding-top: 2em;
-  img{width: 100%;}
-  a{
-    position: fixed;bottom: 2%;margin:0 5%;width: 90%;background: url('../assets/img/btn_bg.png') no-repeat center center; background-size: 100%;height: 5em;line-height: 4.8em;text-align:center;font-size: 1.2em;color: #fff;
-  }
-  div.guide_mask{
-    position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: url('../assets/img/guide.png') no-repeat center center ; background-size: 100% 100%;
-  }
-  .textCenter{
-    text-align: center;
-    font-weight: bold;
-    font-size: 1.4em;
-    margin: .4em 0;  
-  }
-  .fontWeight{
-    line-height: 1.4em;
-    font-size: 1.2em;
-  }
   .container-brief{
-    padding:  0 2em 2em 2em;
+    padding: .5em;
     color: #1E1E1E;
     font-weight: bold;
     &>p{
       text-indent: 2em;
-      span{
-        display:inline-block;text-align:center;font-size:1.2em;
-      }
     }
     &>h1{
       color: #88c9f6;
       line-height: 1.6em;
       font-weight: bold;
-      font-size: 1.8em;
+      font-size: 1.6em;
       margin-bottom: 0.7em;
     }
     .prize-alls,.cont-cqs{
@@ -128,7 +130,7 @@ div.container{
       text-indent: .8em;
         span{
             &:nth-child(2){
-                // width: 13.7em;
+                width: 13.7em;
                 display: inline-block;
             }
             &:last-child{
@@ -136,10 +138,24 @@ div.container{
                 font-weight: bold;
                 padding-left: 0.4em;
                 text-align: right;
-                float: right;
             }
         }
     }
   }
+  font-size: 1.2em;
+  color: #514742;
+  line-height: 1.4em;
+  // background: url(../assets/img/bg_intro.png) no-repeat center center; background-size: cover;position: relative;
+  padding-bottom: 6em;
+  background: #fff;
+  
+  img{width: 100%;}
+  a{
+    position: fixed;bottom: 2%;margin:0 5%;width: 90%;background: url('../assets/img/btn_bg.png') no-repeat center center; background-size: 100%;height: 5em;line-height: 4.8em;text-align:center;font-size: 1.2em;color: #fff;
+  }
+  div.guide_mask{
+    position: fixed;top: 0;left: 0;width: 100%;height: 100%;background: url('../assets/img/guide.png') no-repeat center center ; background-size: 100% 100%;
+  }
 }
+
 </style>

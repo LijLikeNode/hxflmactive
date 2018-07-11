@@ -123,7 +123,7 @@ export default {
               if(response.result=='succ'){
                 sessionStorage.name = this.name;
                 sessionStorage.phone = this.phone;
-                this.$router.push(`/present/${this.codeId}`)
+                this.$router.push(`/present/${this.codeId}/cqs`)
               }else{
                 this.loading = false;
                 popalert.fade(response.msg);

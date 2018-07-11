@@ -67,6 +67,7 @@ export default {
     },
     mounted(){
       common.noShare();
+      // this.tipmsg = `恭喜您获得<br/>'四等奖  华夏精品活动参与卡'<br/><span style="color:gray;font-weight: bold;font-size: 0.9em;">为家人再来一次</span>`;
     },
     methods:{
       rotate_start(){
@@ -83,6 +84,7 @@ export default {
             // console.log(response)
             if(response.result=='succ'){
               // console.log('start')
+              let luckNum = response.luckCn;
               this.init_level();
               this.big = true;
               setTimeout(()=>{
@@ -101,9 +103,11 @@ export default {
                 num4:'四等奖  华夏精品活动参与卡',
               }
 
+              let again = luckNum!=4&&luckNum ? '为家人再来一次' : '';
+
 
               setTimeout(()=>{
-                this.tipmsg = `恭喜您获得<br/>${level == 1 ? present.num1 : level == 2 ? present.num2 : level == 3 ? present.num3 : level == 4 ? present.num4 : level == 5 ? present.num1 : level == 6 ? present.num2 : level == 7 ? present.num3 : level == 8 ? present.num4 : level == 9 ? present.num0 : level == 10 ? present.num0 :''}`;
+                this.tipmsg = `恭喜您获得<br/>${level == 1 ? present.num1 : level == 2 ? present.num2 : level == 3 ? present.num3 : level == 4 ? present.num4 : level == 5 ? present.num1 : level == 6 ? present.num2 : level == 7 ? present.num3 : level == 8 ? present.num4 : level == 9 ? present.num0 : level == 10 ? present.num0 :''}<br/><span style="color:gray;font-style:italic;font-weight: bold;font-size: 0.9em;">${again}</span>`;
                 this.prompts = true;//这个是弹层的半透明黑色背景，没有过渡和动画
                 setTimeout(()=>this.prompts2=true,50);//这个是展示几等奖的面板  有向下滑动的动画
                 this.noStop=false;

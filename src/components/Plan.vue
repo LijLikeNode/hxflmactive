@@ -15,9 +15,9 @@
 					</li>
 					<li>
 						<span>{{info.payment}}年</span>
-						<span>{{info.coverage}}</span>
+						<span>{{info.coverage/10000}}万元</span>
 						<span>终身</span>
-						<span>{{info.totalPrem}}</span>
+						<span>{{info.totalPrem}}元</span>
 					</li>
 				</ul>
 
@@ -31,15 +31,15 @@
 					</li>
 					<li>
 						<span>新常青树</span>
-						<span>{{info.coverage}}</span>
+						<span>{{info.coverage/10000}}万元</span>
 						<span>{{info.payment}}年</span>
-						<span>{{info.cqsPrem}}</span>
+						<span>{{info.cqsPrem}}元</span>
 					</li>
 					<li>
 						<span>新医保通</span>
 						<span>-</span>
 						<span>1年</span>
-						<span>{{info.ybtPrem}}</span>
+						<span>{{info.ybtPrem}}元</span>
 					</li>
 				</ul>
 

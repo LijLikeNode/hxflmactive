@@ -57,7 +57,7 @@ div.container{
       background: url('../assets/img/home_entrance.png') no-repeat center center;background-size:100%;top: 20%;right: 5%;
     } 
     &.rank_entrance{
-      background: url('../assets/img/rank_entrance.png') no-repeat center center;background-size:100%;top: 70%;right: 5%;
+      background: url('../assets/img/rank_entrance.png') no-repeat center center;background-size:100%;top: 53%;
     } 
     &.ybt_entrance{
       background: url('../assets/img/ybt_entrance.png') no-repeat center center;background-size:100%;top: 45.5%;left: 5%;width: 14em;
@@ -69,7 +69,7 @@ div.container{
       background: url('../assets/img/home1.png') no-repeat center center;background-size:100%;top: 13%;left: 5%;
     }
     &:nth-child(2){
-      background: url('../assets/img/home2.png') no-repeat center center;background-size:100%;top: 63%;left: 5%;
+      background: url('../assets/img/home2.png') no-repeat center center;background-size:100%;top: 46%;right: 5%;
     }
     &:nth-child(3){
       background: url('../assets/img/home3.png') no-repeat center center;background-size:96%;top: 38.5%;right: 5%;

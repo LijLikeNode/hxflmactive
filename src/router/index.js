@@ -13,10 +13,18 @@ import Plan from '@/components/Plan'
 import Nindex from '@/components/Nindex'
 import Team from '@/components/Team'
 import Rankn from '@/components/Rankn'
-
+import Activities from '@/components/Activities'
+import Usercase from '@/components/Usercase'
 Vue.use(Router)
 
- const router = new Router({
+ const router = new Router({   // 回滚
+  scrollBehavior (to, from, savedPosition){
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  },
   routes: [
     {
       path: '/home',
@@ -61,6 +69,12 @@ Vue.use(Router)
       meta:{txt:'抽奖'}
     },
     {
+      path: '/present/:id/:pid',
+      name: 'present',
+      component: Present,
+      meta:{txt:'抽奖'}
+    },
+    {
       path: '/rank/:id',
       name: 'rank',
       component: Rank,
@@ -74,7 +88,7 @@ Vue.use(Router)
     },
     {
       path: '/rankn',
-      name: 'rank',
+      name: 'rankn',
       component: Rankn,
       meta:{txt:'排行榜'}
     },
@@ -82,7 +96,7 @@ Vue.use(Router)
       path: '/forecastybt',
       name: 'forecastybt',
       component: ForecastYbt,
-      meta:{txt:'生成计划书'}
+      meta:{txt:'家庭保障DIY体验'}
     },
     {
       path: '/planbook/:salesmanid/:luck_code',
@@ -102,8 +116,21 @@ Vue.use(Router)
       component: Team,
       meta:{txt:'团队获客'}
     },
+    {
+      path: '/activities',
+      name: 'activities',
+      component: Activities,
+      meta:{txt:'营销活动'}
+    },
+    {
+      path: '/usercase',
+      name: 'usercase',
+      component: Usercase,
+      meta:{txt:'客户赔付案例'}
+    },
   ]
 });
+
 router.beforeEach((to, from, next) => {
   if (to.meta.txt) {
     document.title = to.meta.txt;
