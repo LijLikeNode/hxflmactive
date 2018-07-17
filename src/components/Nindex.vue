@@ -1,5 +1,5 @@
 <template>
-  <div class="container page" v-loading='loading' 
+  <div :class="['container page',{'db':db}]" v-loading='loading' 
     element-loading-text="正在提交，请稍等"
     element-loading-background="rgba(0, 0, 0, 0.8)">
     <div class="add_info">
@@ -30,7 +30,8 @@ export default {
         loading:false,
         countHtml: '发送<br/>验证码',
         source:'',
-        product_type:'flm'
+        product_type:'flm',
+        db:false,//是否来自多背版常青树
       }
     },
     created(){
@@ -41,6 +42,27 @@ export default {
     },
     mounted(){
       common.noShare();
+      if(this.codeId==''){//来自多倍版常青树 无医保通 时
+        this.db = true;
+        this.codeId = (() => {//生成随机codeid  提交信息的必要参数 只在多倍版无医保通时手动生成
+        
+        
+                    let chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+                    let nums="";
+                    for(let i=0;i<16;i++){
+                      let id = parseInt(Math.random()*61);
+                      nums+=chars[id];
+                    }
+                    return 'ncqs_'+nums;
+        
+                })();
+
+
+        console.log(this.codeId)
+
+
+
+      }
     },
     computed:{
       nomal(){
@@ -92,7 +114,7 @@ export default {
         }
       },
       check_name_format(){
-        let pass = /^[\u4E00-\u9FA5A-Za-z]+$/.test(this.name);
+        let pass = /^[\u4E00-\u9FA5A-Za-z0-9]+$/.test(this.name);
         !pass?popalert.fade('请输入汉字或英文姓名'):'';
         return pass;
       },
@@ -152,6 +174,9 @@ export default {
 @import url(../assets/css/main.less);
 div.container{
   background: url('../assets/img/new/n_bg1.png') no-repeat center center; background-size:cover;
+  &.db{
+    background: url('../assets/img/new/n_bg2.png') no-repeat center center; background-size:cover;
+  }
   div.add_info{
      position: absolute;bottom: 3em;width:90%;left: 5%;background: #faf7e8;box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.5);padding:6.5em 2em 1.5em;border-radius:10px;
     ul{

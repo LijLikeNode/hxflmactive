@@ -91,7 +91,7 @@ export default {
         }
       },
       check_name_format(){
-        let pass = /^[\u4E00-\u9FA5A-Za-z]+$/.test(this.name);
+        let pass = /^[\u4E00-\u9FA5A-Za-z0-9]+$/.test(this.name);
         !pass?popalert.fade('请输入汉字或英文姓名'):'';
         return pass;
       },

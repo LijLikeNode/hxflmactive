@@ -14,7 +14,11 @@
         <el-col :span="6"><div class="grid-content bg-purple">{{i}}</div></el-col>
         <el-col :span="18"><div class="grid-content bg-purple-light">{{v}}</div></el-col>
       </el-row>
+      <div class="tips">
+        <p><span>注： </span>特、一、二等奖在京东惠采平台上采购，如遇该产品停产或缺货，将更换为等值其他礼品。</p>
+      </div>
     </div>
+    
     <div :class="['start_extend',{'active':big},{'toleft':small}]">
       
     </div>
@@ -175,7 +179,7 @@ div.container{
     &.toright{ right:0;margin-right: -100%;transform: scale(.8);}
   }
   div.add_info{
-     position: absolute;bottom: 3%;width:90%;left: 5%;padding:3.2em 0em .5em;background:#faf7e9;border-radius:8px;
+     position: absolute;bottom: 1.5%;width:90%;left: 5%;padding:3.2em 0em .5em;background:#faf7e9;border-radius:8px;
     .row-bg{
       .grid-content{
         text-align: center;font-size:1.2em;margin-bottom:.5em;color:rgb(82,158,42);
@@ -186,6 +190,12 @@ div.container{
     }
     b{
       position:absolute;top:-1.5em;left:1em;width:8em;height:4em;background:url(../assets/img/arrow2.png) no-repeat center center;background-size:100%;
+    }
+    .tips{
+      padding: .2em 10%;font-size:.8em;color:#529e2a;text-align:left;position:relative;text-align:center;
+      // span{
+      //   position:absolute;left:1.5em;top:.2em;
+      // }
     }
   }
   div.con{
@@ -294,5 +304,6 @@ div.container{
       line-height: 2;color: #529e2a;
     }
   }
+
 }
 </style>

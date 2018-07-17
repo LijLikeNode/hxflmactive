@@ -12,6 +12,9 @@
             <span>{{v.text}}</span>
             <span>{{v.num}}</span>
         </p>
+        <div class="tips">
+          <p>注：特、一、二等奖在京东惠采平台上采购，如遇该产品停产或缺货，将更换为等值其他礼品。</p>
+        </div>
       </div>
       <img src="../assets/img/bg_intro.png">
       <a @click="evn">{{btn_text}}</a>
@@ -141,5 +144,11 @@ div.container{
         }
     }
   }
+}
+
+
+.tips{
+  padding:0 5%;padding-top:1em;position: relative;text-align:center;
+  
 }
 </style>
