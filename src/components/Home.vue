@@ -72,9 +72,9 @@ export default {
       },
       to_family(){
         // console.log('to_rank')
-        let href = `http://qyhgateway.ihxlife.com/api/v1/oauth2/index?state=${rq().salesmanId}`;
+        let href = `https://sales.ihxlife.com/imr/views/lazy_plan/information_entry.html?v=0719&agentState=1&agentCode=${rq().salesmanId}`;
         // console.log(href)
-        // location.href = href;
+        location.href = href;
       },
     }
 }
